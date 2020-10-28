@@ -12,5 +12,6 @@ RUN mkdir /root/.ssh
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
 COPY entrypoint.sh /
 COPY replicator.sh /
+COPY ssh_config /root/.ssh/config
 
 ENTRYPOINT ["/entrypoint.sh"]
