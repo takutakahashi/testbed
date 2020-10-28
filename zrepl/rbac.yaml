@@ -1,0 +1,29 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: zrepl-role
+rules:
+- apiGroups: [""]
+  resources: ["nodes"]
+  verbs: ["get", "list"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: zrepl-role-binding
+  namespace: zrepl
+subjects:
+- kind: ServiceAccount
+  name: zrepl
+  namespace: zrepl
+roleRef:
+  kind: ClusterRole
+  name: zrepl-role
+  apiGroup: rbac.authorization.k8s.io
+
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: zrepl
+  namespace: zrepl

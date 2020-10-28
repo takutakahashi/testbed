@@ -4,7 +4,8 @@ metadata:
   labels:
     app: zrepl
     tier: test
-  name: zreplication
+  name: zrepl
+  namespace: zrepl
 spec:
   replicas: 1
   selector:
@@ -17,14 +18,39 @@ spec:
         app: zrepl
         tier: test
     spec:
+      serviceAccount: zrepl
       nodeSelector:
         kubernetes.io/hostname: node01
       containers:
-      - image: ubuntu
+      - image: takutakahashi/zrepl
         imagePullPolicy: Always
         name: app
         securityContext:
           privileged: true
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: zrepl-replicator
+  name: zrepl-replicator
+  namespace: zrepl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zrepl-replicator
+  template:
+    metadata:
+      labels:
+        app: zrepl-replicator
+    spec:
+      serviceAccount: zrepl
+      nodeSelector:
+        kubernetes.io/hostname: node01
+      containers:
+      - image: takutakahashi/zrepl
+        imagePullPolicy: Always
+        name: app
         command:
-          - sleep
-          - infinity
+        - /replicator.sh
