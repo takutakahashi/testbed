@@ -1,13 +1,12 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   labels:
     app: zrepl
-    tier: test
-  name: zrepl
+    tier: daemon
+  name: node-daemon
   namespace: zrepl
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: zrepl
@@ -20,7 +19,7 @@ spec:
     spec:
       serviceAccount: zrepl
       nodeSelector:
-        kubernetes.io/hostname: node01
+        zrepl: "true"
       containers:
       - image: takutakahashi/zrepl
         imagePullPolicy: Always
@@ -32,18 +31,18 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: zrepl-replicator
-  name: zrepl-replicator
+    app: replicator
+  name: replicator
   namespace: zrepl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: zrepl-replicator
+      app: replicator
   template:
     metadata:
       labels:
-        app: zrepl-replicator
+        app: replicator
     spec:
       serviceAccount: zrepl
       nodeSelector:

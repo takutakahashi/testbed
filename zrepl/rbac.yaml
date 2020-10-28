@@ -4,7 +4,7 @@ metadata:
   name: zrepl-role
 rules:
 - apiGroups: [""]
-  resources: ["nodes"]
+  resources: ["nodes", "pods"]
   verbs: ["get", "list"]
 ---
 kind: ClusterRoleBinding
