@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: zrepl
+    tier: test
+  name: zreplication
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: zrepl
+      tier: test
+  template:
+    metadata:
+      labels:
+        app: zrepl
+        tier: test
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: node01
+      containers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        name: app
+        securityContext:
+          privileged: true
+        command:
+          - sleep
+          - infinity
