@@ -40,7 +40,7 @@ class Replication():
         return replsets
 
 
-repl = Replication(use_service_account=False)
+repl = Replication()
 for pool, replset in repl.make_repl_dataset().items():
-    cmd = ["/exec_replication.sh", pool, replset["master"], replset["replica"]]
+    cmd = ["/replication.sh", pool, replset["master"], replset["replica"]]
     subprocess.run(cmd)
