@@ -10,8 +10,8 @@ RUN apt update && apt install -y zfsutils wget curl openssh-server nginx \
 RUN mkdir /run/sshd
 RUN mkdir /root/.ssh
 RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin prohibit-password/' /etc/ssh/sshd_config
-COPY entrypoint.sh /
-COPY replicator.sh /
+COPY entrypoint_daemon.sh /
+COPY entrypoint_replicator.sh /
+COPY exec_replication.py /
+COPY replication.sh /
 COPY ssh_config /root/.ssh/config
-
-ENTRYPOINT ["/entrypoint.sh"]

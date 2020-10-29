@@ -26,6 +26,8 @@ spec:
         name: app
         securityContext:
           privileged: true
+        command:
+        - /entrypoint_daemon.sh
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -52,4 +54,4 @@ spec:
         imagePullPolicy: Always
         name: app
         command:
-        - /replicator.sh
+        - /entrypoint_replicator.sh
