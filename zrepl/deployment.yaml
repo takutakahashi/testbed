@@ -53,5 +53,8 @@ spec:
       - image: takutakahashi/zrepl
         imagePullPolicy: Always
         name: app
+        env:
+          - name: DEBUG
+            value: "true"
         command:
         - /entrypoint_replicator.sh

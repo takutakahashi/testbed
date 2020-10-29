@@ -1,3 +1,5 @@
 #!/bin/bash
 
-echo $@
+POOL=$1
+SRC=$2
+DST=$3
