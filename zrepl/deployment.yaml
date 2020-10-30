@@ -2,26 +2,26 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   labels:
-    app: zrepl
+    app: z8r
     tier: daemon
   name: node-daemon
-  namespace: zrepl
+  namespace: z8r
 spec:
   selector:
     matchLabels:
-      app: zrepl
+      app: z8r
       tier: test
   template:
     metadata:
       labels:
-        app: zrepl
+        app: z8r
         tier: test
     spec:
-      serviceAccount: zrepl
+      serviceAccount: z8r
       nodeSelector:
-        zrepl: "true"
+        z8r: "true"
       containers:
-      - image: takutakahashi/zrepl
+      - image: takutakahashi/z8r
         imagePullPolicy: Always
         name: app
         securityContext:
@@ -40,7 +40,7 @@ metadata:
   labels:
     app: replicator
   name: replicator
-  namespace: zrepl
+  namespace: z8r
 spec:
   replicas: 1
   selector:
@@ -51,11 +51,11 @@ spec:
       labels:
         app: replicator
     spec:
-      serviceAccount: zrepl
+      serviceAccount: z8r
       nodeSelector:
         kubernetes.io/hostname: node01
       containers:
-      - image: takutakahashi/zrepl
+      - image: takutakahashi/z8r
         imagePullPolicy: Always
         name: app
         env:

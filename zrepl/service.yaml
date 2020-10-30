@@ -4,7 +4,7 @@ metadata:
   labels:
     app: replicator
   name: replicator
-  namespace: zrepl
+  namespace: z8r
 spec:
   type: ClusterIP
   ports:
