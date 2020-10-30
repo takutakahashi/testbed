@@ -1,5 +1,6 @@
 from kubernetes import client, config
 import subprocess
+import time
 
 
 class Replication():
@@ -41,6 +42,9 @@ class Replication():
 
 
 repl = Replication()
-for pool, replset in repl.make_repl_dataset().items():
-    cmd = ["/replication.sh", pool, replset["master"], replset["replica"]]
-    subprocess.run(cmd)
+print(repl.make_repl_dataset())
+while True:
+    for pool, replset in repl.make_repl_dataset().items():
+        cmd = ["/replication.sh", pool, replset["master"], replset["replica"]]
+        subprocess.run(cmd)
+    time.sleep(120)

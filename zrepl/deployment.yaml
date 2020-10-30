@@ -55,6 +55,6 @@ spec:
         name: app
         env:
           - name: DEBUG
-            value: "true"
+            value: "false"
         command:
         - /entrypoint_replicator.sh
