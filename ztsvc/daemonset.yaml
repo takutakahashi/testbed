@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: zerotier-node-daemon
+  namespace: kube-system
+  labels:
+    service: zerotier
+spec:
+  selector:
+    matchLabels:
+      service: zerotier
+  template:
+    metadata:
+      labels:
+        service: zerotier
+    spec:
+      containers:
+      - env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: NETWORK_ID
+          valueFrom:
+            secretKeyRef:
+              key: NETWORK_ID
+              name: zerotier-secret
+        - name: ZT_TOKEN
+          valueFrom:
+            secretKeyRef:
+              key: ZT_TOKEN
+              name: zerotier-secret
+        image: takutakahashi/zerotier-node-daemon
+        #        command:
+        #          - sleep
+        #          - infinity
+        imagePullPolicy: Always
+        name: daemon
+        resources:
+          limits:
+            cpu: 800m
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 64Mi
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /var/lib/zerotier-one
+          name: ztdata
+      hostNetwork: true
+      restartPolicy: Always
+      volumes:
+      - emptyDir: {}
+        name: ztdata
+  updateStrategy:
+    rollingUpdate:
+      maxUnavailable: 10%
+    type: RollingUpdate
