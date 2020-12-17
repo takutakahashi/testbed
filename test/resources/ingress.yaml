@@ -1,0 +1,17 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: test
+spec:
+  tls:
+  - hosts:
+    - test.example.com
+    secretName: test-secret
+  rules:
+  - host: test.example.com
+    http:
+      paths:
+      - path: /
+        backend:
+          serviceName: test
+          servicePort: 80
