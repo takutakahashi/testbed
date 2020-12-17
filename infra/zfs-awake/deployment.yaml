@@ -15,7 +15,7 @@ spec:
         app: toucher
     spec:
       nodeSelector:
-        kubernetes.io/hostname: node01
+        kubernetes.io/hostname: ws
       containers:
       - image: ubuntu
         imagePullPolicy: Always
