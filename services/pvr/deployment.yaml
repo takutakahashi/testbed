@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mirakurun
+  name: mirakurun
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mirakurun
+  template:
+    metadata:
+      labels:
+        app: mirakurun
+    spec:
+      nodeSelector:
+        app: mirakurun
+      containers:
+      - image: chinachu/mirakurun
+        imagePullPolicy: Always
+        name: api
+        securityContext:
+          privileged: true
+        env:
+        - name: TZ
+          value: Asia/Tokyo
+        ports:
+        - containerPort: 40772
+          name: mirakurun
+          protocol: TCP
+        - containerPort: 9229
+          name: unknown
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /dev/dvb
+          name: devdvb
+      volumes:
+      - name: devbus
+        hostPath:
+          path: /dev/bus
+      - name: devdvb
+        hostPath:
+          path: /dev/dvb
