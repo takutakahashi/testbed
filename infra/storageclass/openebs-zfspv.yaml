@@ -1,0 +1,17 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: openebs-zfspv
+parameters:
+  recordsize: "4k"
+  compression: "off"
+  dedup: "off"
+  fstype: "ext4"
+  poolname: "tank/pv"
+provisioner: zfs.csi.openebs.io
+volumeBindingMode: WaitForFirstConsumer
+allowedTopologies:
+- matchLabelExpressions:
+  - key: zfs.openebs.io/tank
+    values:
+    - "true"
