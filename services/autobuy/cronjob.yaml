@@ -1,0 +1,25 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: autobuy
+spec:
+  schedule: "0 0 */3 * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          restartPolicy: OnFailure
+          containers:
+          - name: buy
+            image: takutakahashi/autobuy
+            envFrom:
+            - secretRef:
+                name: autobuy-secret
+            args:
+            - python
+            - app.py
+            - --ticker
+            - ETH_JPY
+            - --jpy
+            - "4000"
+
