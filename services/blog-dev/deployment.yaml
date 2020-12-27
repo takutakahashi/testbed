@@ -19,6 +19,17 @@ spec:
         emptyDir: {}
       - name: content
         emptyDir: {}
+      initContainers:
+      - image: takutakahashi/blog
+        imagePullPolicy: Always
+        name: mv
+        command:
+          - bash
+          - -c
+          - "mv /src/content/posts/* /content"
+        volumeMounts:
+        - mountPath: /content
+          name: content
       containers:
       - image: nginx
         imagePullPolicy: Always
