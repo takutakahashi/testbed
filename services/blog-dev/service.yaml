@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: www.takutakahashi.dev
+  name: www.takutakahashi.dev
+spec:
+  type: ClusterIP
+  ports:
+  - name: www.takutakahashi.dev
+    protocol: TCP
+    port: 80
+  selector:
+    app: www.takutakahashi.dev

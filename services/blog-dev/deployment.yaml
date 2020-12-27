@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: www.takutakahashi.dev
+  name: www.takutakahashi.dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: www.takutakahashi.dev
+  template:
+    metadata:
+      labels:
+        app: www.takutakahashi.dev
+    spec:
+      volumes:
+      - name: public
+        emptyDir: {}
+      - name: content
+        emptyDir: {}
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: server
+        volumeMounts:
+        - mountPath: /var/www/html
+          name: public
+      - image: takutakahahsi/blog
+        imagePullPolicy: Always
+        name: worker
+        command:
+          - notion-tpl
+          - --table-id
+          - $(TABLE_ID)
+          - --token
+          - $(TOKEN)
+          - - export-path
+          - /src/content/posts
+          - --template
+          - /etc/notion-tpl/hugo.md.tpl
+          - --cmd
+          - hugo
+        volumeMounts:
+        - mountPath: /src/public
+          name: public
+        - mountPath: /src/content
+          name: content
+        envFrom:
+        - secretRef:
+            secretName: devblog-secret
