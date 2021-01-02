@@ -2,31 +2,42 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: www.takutakahashi.dev
-  name: www.takutakahashi.dev
+    app: devblog
+  name: devblog
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: www.takutakahashi.dev
+      app: devblog
   template:
     metadata:
       labels:
-        app: www.takutakahashi.dev
+        app: devblog
     spec:
       volumes:
       - name: public
         emptyDir: {}
       - name: content
         emptyDir: {}
+      initContainers:
+      - image: takutakahashi/blog
+        imagePullPolicy: Always
+        name: mv
+        command:
+          - bash
+          - -c
+          - "mv /src/content/posts/* /content"
+        volumeMounts:
+        - mountPath: /content
+          name: content
       containers:
       - image: nginx
         imagePullPolicy: Always
         name: server
         volumeMounts:
-        - mountPath: /var/www/html
+        - mountPath: /usr/share/nginx/html
           name: public
-      - image: takutakahahsi/blog
+      - image: takutakahashi/blog
         imagePullPolicy: Always
         name: worker
         command:
@@ -35,7 +46,7 @@ spec:
           - $(TABLE_ID)
           - --token
           - $(TOKEN)
-          - - export-path
+          - --export-path
           - /src/content/posts
           - --template
           - /etc/notion-tpl/hugo.md.tpl
@@ -44,8 +55,8 @@ spec:
         volumeMounts:
         - mountPath: /src/public
           name: public
-        - mountPath: /src/content
+        - mountPath: /src/content/posts
           name: content
         envFrom:
         - secretRef:
-            secretName: devblog-secret
+            name: devblog-secret
