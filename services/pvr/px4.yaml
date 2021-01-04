@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: mirakurun
+    tuner: px4
+  name: mirakurun-px4
+spec:
+  selector:
+    matchLabels:
+      app: mirakurun
+      tuner: px4
+  template:
+    metadata:
+      labels:
+        app: mirakurun
+        tuner: px4
+    spec:
+      nodeSelector:
+        app: mirakurun
+        tuner: px4
+      initContainers:
+      - image: busybox
+        name: cp
+        command:
+          - cp
+          - /src/tuners.yml
+          - /dst/tuners.yml
+        volumeMounts:
+        - mountPath: /src
+          name: mirakurun-config
+        - mountPath: /dst
+          name: app-config
+      - image: mirakc/mirakc
+        name: cp-recpt1
+        command:
+          - cp
+          - /usr/local/bin/recpt1
+          - /dst/
+        volumeMounts:
+        - mountPath: /dst
+          name: app-config
+      containers:
+      - image: chinachu/mirakurun
+        imagePullPolicy: Always
+        name: api
+        securityContext:
+          privileged: true
+        env:
+        - name: TZ
+          value: Asia/Tokyo
+        ports:
+        - containerPort: 40772
+          name: mirakurun
+          protocol: TCP
+        - containerPort: 9229
+          name: unknown
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /app-config
+          name: app-config
+        - mountPath: /dev/px4video0
+          name: devpx4video0
+        - mountPath: /dev/px4video1
+          name: devpx4video1
+        - mountPath: /dev/px4video2
+          name: devpx4video2
+        - mountPath: /dev/px4video3
+          name: devpx4video3
+      volumes:
+      - name: app-config
+        emptyDir: {}
+      - name: mirakurun-config
+        configMap:
+          name: mirakurun-px4-config
+      - name: devbus
+        hostPath:
+          path: /dev/bus
+      - name: devpx4video0
+        hostPath:
+          path: /dev/px4video0
+      - name: devpx4video1
+        hostPath:
+          path: /dev/px4video1
+      - name: devpx4video2
+        hostPath:
+          path: /dev/px4video2
+      - name: devpx4video3
+        hostPath:
+          path: /dev/px4video3
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mirakurun-px4-config
+data:
+  tuners.yml: |
+    - name: PX-W3U4-S1
+      types:
+        - BS
+        - CS
+      command: /app-config/recpt1 --device /dev/px4video0 --lnb 15 <channel> - -
+      decoder: arib-b25-stream-test
+      isDisabled: true
+    
+    - name: PX-W3U4-S2
+      types:
+        - BS
+        - CS
+      command: /app-config/recpt1 --device /dev/px4video1 --lnb 15 <channel> - -
+      decoder: arib-b25-stream-test
+      isDisabled: true
+    
+    - name: PX-W3U4-T1
+      types:
+        - GR
+      command: /app-config/recpt1 --device /dev/px4video2 <channel> - -
+      decoder: arib-b25-stream-test
+      isDisabled: false
+    
+    - name: PX-W3U4-T2
+      types:
+        - GR
+      command: /app-config/recpt1 --device /dev/px4video3 <channel> - -
+      decoder: arib-b25-stream-test
+      isDisabled: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mirakurun
+    tuner: px4
+  name: mirakurun-px4
+spec:
+  type: ClusterIP
+  ports:
+  - name: mirakurun
+    port: 40772
+    protocol: TCP
+  - name: unknown
+    port: 9229
+    protocol: TCP
+  selector:
+    app: mirakurun
+    tuner: px4

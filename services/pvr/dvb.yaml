@@ -1,12 +1,11 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   labels:
     app: mirakurun
     tuner: dvb
   name: mirakurun-dvb
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app: mirakurun
