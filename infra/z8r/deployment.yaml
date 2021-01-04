@@ -10,18 +10,18 @@ spec:
   selector:
     matchLabels:
       app: z8r
-      tier: test
+      tier: daemon
   template:
     metadata:
       labels:
         app: z8r
-        tier: test
+        tier: daemon
     spec:
       serviceAccount: z8r
       nodeSelector:
         z8r: "true"
       containers:
-      - image: takutakahashi/z8r
+      - image: takutakahashi/z8r:v0.2.4
         imagePullPolicy: Always
         name: app
         securityContext:
@@ -52,8 +52,6 @@ spec:
         app: replicator
     spec:
       serviceAccount: z8r
-      nodeSelector:
-        kubernetes.io/hostname: node01
       containers:
       - image: takutakahashi/z8r
         imagePullPolicy: Always
