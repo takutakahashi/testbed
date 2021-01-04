@@ -3,7 +3,8 @@ kind: Service
 metadata:
   labels:
     app: mirakurun
-  name: mirakurun
+    tuner: dvb
+  name: mirakurun-dvb
 spec:
   type: ClusterIP
   ports:
@@ -15,3 +16,4 @@ spec:
     protocol: TCP
   selector:
     app: mirakurun
+    tuner: dvb

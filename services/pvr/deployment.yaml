@@ -3,19 +3,23 @@ kind: Deployment
 metadata:
   labels:
     app: mirakurun
-  name: mirakurun
+    tuner: dvb
+  name: mirakurun-dvb
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: mirakurun
+      tuner: dvb
   template:
     metadata:
       labels:
         app: mirakurun
+        tuner: dvb
     spec:
       nodeSelector:
         app: mirakurun
+        tuner: dvb
       containers:
       - image: chinachu/mirakurun
         imagePullPolicy: Always
