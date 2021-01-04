@@ -46,3 +46,23 @@ spec:
       - name: devdvb
         hostPath:
           path: /dev/dvb
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mirakurun
+    tuner: dvb
+  name: mirakurun-dvb
+spec:
+  type: ClusterIP
+  ports:
+  - name: mirakurun
+    port: 40772
+    protocol: TCP
+  - name: unknown
+    port: 9229
+    protocol: TCP
+  selector:
+    app: mirakurun
+    tuner: dvb
