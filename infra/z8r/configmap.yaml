@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: z8r-config
+  namespace: z8r
+data:
+  config.yaml: |
+    - master: "kvm:tank/all"
+      replica: "ws:tank/all"
+    - master: "kvm:tank/etc"
+      replica: "ws:tank/etc"
+    - master: "kvm:tank/enctv"
+      replica: "ws:tank/enctv"
+    - master: "kvm:tank/tv"
+      replica: "ws:tank/tv"
+    - master: "node02:fastpool/pv"
+      replica: "ws:tank/fastpool/pv"
+    - master: "node02:fastpool/tv"
+      replica: "ws:fastpool/tv"
+    - master: "node02:fastpool/aki"
+      replica: "ws:fastpool/aki"

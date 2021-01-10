@@ -7,6 +7,8 @@ metadata:
   name: node-daemon
   namespace: z8r
 spec:
+  #  strategy:
+  #    type: Recreate
   selector:
     matchLabels:
       app: z8r
@@ -20,14 +22,21 @@ spec:
       serviceAccount: z8r
       nodeSelector:
         z8r: "true"
+      volumes:
+      - name: config
+        configMap:
+          name: z8r-config
       containers:
-      - image: takutakahashi/z8r:v0.2.4
+      - image: takutakahashi/z8r:v0.4.1
         imagePullPolicy: Always
         name: app
         securityContext:
           privileged: true
         command:
         - /entrypoint_daemon.sh
+        volumeMounts:
+        - name: config
+          mountPath: /etc/z8r
         env:
         - name: NODE_NAME
           valueFrom:
@@ -52,10 +61,17 @@ spec:
         app: replicator
     spec:
       serviceAccount: z8r
+      volumes:
+      - name: config
+        configMap:
+          name: z8r-config
       containers:
-      - image: takutakahashi/z8r
+      - image: takutakahashi/z8r:v0.4.1
         imagePullPolicy: Always
         name: app
+        volumeMounts:
+        - name: config
+          mountPath: /etc/z8r
         env:
           - name: DEBUG
             value: "false"
