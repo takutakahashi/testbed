@@ -2,12 +2,12 @@ allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  name: fastpool
+  name: ceph-backend
 parameters:
   compression: "off"
   dedup: "off"
   fstype: ext4
-  poolname: fastpool
+  poolname: fastpool/ceph
   recordsize: 4k
 provisioner: zfs.csi.openebs.io
 reclaimPolicy: Delete

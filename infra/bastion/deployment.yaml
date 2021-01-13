@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: bastion
+  name: bastion
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: bastion
+  template:
+    metadata:
+      labels:
+        app: bastion
+    spec:
+      containers:
+      - image: takutakahashi/k8s-bastion
+        imagePullPolicy: Always
+        name: server
+        env:
+        - name: USER
+          value: owner
+        - name: AUTHORIZED_KEYS_URL
+          value: https://github.com/takutakahashi.keys
