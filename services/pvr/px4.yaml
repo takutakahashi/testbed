@@ -16,6 +16,11 @@ spec:
         app: mirakurun
         tuner: px4
     spec:
+      tolerations:
+      - key: "kubernetes.io/arch"
+        operator: "Equal"
+        value: "arm"
+        effect: "NoSchedule"
       nodeSelector:
         app: mirakurun
         tuner: px4

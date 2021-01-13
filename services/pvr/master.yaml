@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: mirakurun
+    tuner: master
+  name: mirakurun-master
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mirakurun
+      tuner: master
+  template:
+    metadata:
+      labels:
+        app: mirakurun
+        tuner: master
+    spec:
+      volumes:
+      - name: app-config
+        emptyDir: {}
+      - name: mirakurun-config
+        configMap:
+          name: mirakurun-master-config
+      initContainers:
+      - image: busybox
+        name: cp
+        command:
+          - cp
+          - /src/tuners.yml
+          - /dst/tuners.yml
+        volumeMounts:
+        - mountPath: /src
+          name: mirakurun-config
+        - mountPath: /dst
+          name: app-config
+      containers:
+      - image: chinachu/mirakurun
+        securityContext:
+          privileged: true
+        imagePullPolicy: Always
+        name: api
+        env:
+        - name: TZ
+          value: Asia/Tokyo
+        ports:
+        - containerPort: 40772
+          name: mirakurun
+          protocol: TCP
+        - containerPort: 9229
+          name: unknown
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /app-config
+          name: app-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mirakurun-master-config
+data:
+  tuners.yml: |
+    - name: S1
+      types:
+        - BS
+        - CS
+      remoteMirakurunHost: mirakurun-px4
+      remoteMirakurunDecoder: true
+      isDisabled: true
+    
+    - name: S2
+      types:
+        - BS
+        - CS
+      remoteMirakurunHost: mirakurun-px4
+      remoteMirakurunDecoder: true
+      isDisabled: true
+    
+    - name: T1
+      types:
+        - GR
+      remoteMirakurunHost: mirakurun-px4
+      remoteMirakurunDecoder: true
+    - name: T2
+      types:
+        - GR
+      remoteMirakurunHost: mirakurun-px4
+      remoteMirakurunDecoder: true
+    - name: T3
+      types:
+        - GR
+      remoteMirakurunHost: mirakurun-dvb
+      remoteMirakurunDecoder: true
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mirakurun
+    tuner: master
+  name: mirakurun-master
+spec:
+  type: ClusterIP
+  ports:
+  - name: mirakurun
+    port: 40772
+    protocol: TCP
+  - name: unknown
+    port: 9229
+    protocol: TCP
+  selector:
+    app: mirakurun
+    tuner: master
