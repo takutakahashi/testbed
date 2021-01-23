@@ -3,20 +3,24 @@ kind: Deployment
 metadata:
   labels:
     app: devblog
-  name: devblog
+    role: worker
+  name: devblog-worker
 spec:
   replicas: 1
   selector:
     matchLabels:
       app: devblog
+      role: worker
   template:
     metadata:
       labels:
         app: devblog
+        role: worker
     spec:
       volumes:
       - name: public
-        emptyDir: {}
+        persistentVolumeClaim:
+          claimName: techblog-assets
       - name: content
         emptyDir: {}
       initContainers:
@@ -31,12 +35,6 @@ spec:
         - mountPath: /content
           name: content
       containers:
-      - image: nginx
-        imagePullPolicy: Always
-        name: server
-        volumeMounts:
-        - mountPath: /usr/share/nginx/html
-          name: public
       - image: takutakahashi/blog
         imagePullPolicy: Always
         name: worker
@@ -60,3 +58,34 @@ spec:
         envFrom:
         - secretRef:
             name: devblog-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: devblog
+    role: web
+  name: devblog-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devblog
+      role: web
+  template:
+    metadata:
+      labels:
+        app: devblog
+        role: web
+    spec:
+      volumes:
+      - name: public
+        persistentVolumeClaim:
+          claimName: techblog-assets
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: server
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: public
