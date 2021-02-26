@@ -2,19 +2,20 @@ apiVersion: extensions/v1beta1
 kind: Ingress
 metadata:
   name: devblog
+  namespace: blog
   annotations:
     kubernetes.io/ingress.class: "nginx"
     cert-manager.io/cluster-issuer: letsencrypt
 spec:
   tls:
   - hosts:
-    - www.takutakahashi.dev
+    - www.in.takutakahashi.dev
     secretName: devblog-tls-secret
   rules:
-  - host: www.takutakahashi.dev
+  - host: www.in.takutakahashi.dev
     http:
       paths:
       - path: /
         backend:
-          serviceName: devblog
+          serviceName: devblog-web
           servicePort: 80

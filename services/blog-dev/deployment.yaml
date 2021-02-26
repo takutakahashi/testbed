@@ -5,6 +5,7 @@ metadata:
     app: devblog
     role: worker
   name: devblog-worker
+  namespace: blog
 spec:
   replicas: 1
   selector:
@@ -66,6 +67,7 @@ metadata:
     app: devblog
     role: web
   name: devblog-web
+  namespace: blog
 spec:
   replicas: 1
   selector:
