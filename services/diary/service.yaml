@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: diary
+    role: web
+  name: diary-web
+  namespace: blog
+spec:
+  ports:
+  - name: diary
+    port: 80
+    protocol: TCP
+    targetPort: 80
+  selector:
+    app: diary
+    role: web
+  type: LoadBalancer
