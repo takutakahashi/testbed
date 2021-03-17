@@ -77,3 +77,38 @@ spec:
             value: "false"
         command:
         - /entrypoint_replicator.sh
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: snapshot
+  name: snapshot
+  namespace: z8r
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: snapshot
+  template:
+    metadata:
+      labels:
+        app: snapshot
+    spec:
+      serviceAccount: z8r
+      volumes:
+      - name: config
+        configMap:
+          name: z8r-config
+      containers:
+      - image: takutakahashi/z8r:v0.5.1
+        imagePullPolicy: Always
+        name: app
+        volumeMounts:
+        - name: config
+          mountPath: /etc/z8r
+        env:
+          - name: DEBUG
+            value: "false"
+        command:
+          - /entrypoint_snapshot.sh
