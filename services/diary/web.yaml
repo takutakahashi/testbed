@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: diary
+    role: web
+  name: diary-web
+  namespace: blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: diary
+      role: web
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: diary
+        role: web
+    spec:
+      containers:
+      - image: nginx
+        imagePullPolicy: Always
+        name: server
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: public
+      volumes:
+      - name: public
+        persistentVolumeClaim:
+          claimName: diary-assets

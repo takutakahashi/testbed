@@ -13,3 +13,19 @@ spec:
     protocol: TCP
   selector:
     app: replicator
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: snapshot
+  name: snapshot
+  namespace: z8r
+spec:
+  type: ClusterIP
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+  selector:
+    app: snapshot
