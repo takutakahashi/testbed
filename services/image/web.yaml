@@ -2,15 +2,15 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    app: diary
+    app: image
     role: web
-  name: diary-web
+  name: image-web
   namespace: blog
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: diary
+      app: image
       role: web
   strategy:
     rollingUpdate:
@@ -20,7 +20,7 @@ spec:
   template:
     metadata:
       labels:
-        app: diary
+        app: image
         role: web
     spec:
       containers:
@@ -30,12 +30,7 @@ spec:
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: public
-        - mountPath: /etc/nginx/conf.d
-          name: config
       volumes:
       - name: public
         persistentVolumeClaim:
-          claimName: diary-assets
-      - name: config
-        configMap:
-          name: diary-nginx
+          claimName: image-assets
