@@ -39,11 +39,16 @@ spec:
         volumeMounts:
         - mountPath: /src/public
           name: public
+        - mountPath: /src/images
+          name: images
         - mountPath: /src/content/posts
           name: content
       volumes:
       - name: public
         persistentVolumeClaim:
           claimName: diary-assets
+      - name: images
+        persistentVolumeClaim:
+          claimName: image-assets
       - emptyDir: {}
         name: content

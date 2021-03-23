@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - www.in.takutakahashi.dev
+    - www.takutakahashi.dev
     secretName: devblog-tls-secret
   rules:
-  - host: www.in.takutakahashi.dev
+  - host: www.takutakahashi.dev
     http:
       paths:
       - path: /
