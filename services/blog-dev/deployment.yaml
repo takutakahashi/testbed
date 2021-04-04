@@ -22,6 +22,9 @@ spec:
       - name: public
         persistentVolumeClaim:
           claimName: techblog-assets
+      - name: images
+        persistentVolumeClaim:
+          claimName: image-assets
       - name: content
         emptyDir: {}
       initContainers:
@@ -36,24 +39,23 @@ spec:
         - mountPath: /content
           name: content
       containers:
-      - image: takutakahashi/blog
+      - image: takutakahashi/blog.tpl
         imagePullPolicy: Always
+        env:
+        - name: BLOG_TITLE
+          value: takutakahashi.dev
+        - name: BLOG_URL
+          value: www.takutakahashi.dev
+        - name: BLOG_GA
+          value: "UA-166034194-1"
+        - name: BLOG_THEME_URL
+          value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
         name: worker
-        command:
-          - notion-tpl
-          - --table-id
-          - $(TABLE_ID)
-          - --token
-          - $(TOKEN)
-          - --export-path
-          - /src/content/posts
-          - --template
-          - /etc/notion-tpl/hugo.md.tpl
-          - --cmd
-          - hugo
         volumeMounts:
         - mountPath: /src/public
           name: public
+        - mountPath: /src/images
+          name: images
         - mountPath: /src/content/posts
           name: content
         envFrom:
@@ -84,6 +86,9 @@ spec:
       - name: public
         persistentVolumeClaim:
           claimName: techblog-assets
+      - name: config
+        configMap:
+          name: diary-nginx
       containers:
       - image: nginx
         imagePullPolicy: Always
@@ -91,3 +96,5 @@ spec:
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: public
+        - mountPath: /etc/nginx/conf.d
+          name: config

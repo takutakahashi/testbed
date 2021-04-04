@@ -14,7 +14,7 @@ data:
             index  index.html index.htm;
         }
  
-        location ~ (?<filename>.+\.(jpg|png))$ {
+        location ~ (?<filename>.+\.(jpg|jpeg|png))$ {
           rewrite /(.*)/(.*)\.(jpg|png|jpeg)$ /$2.$3 break;
           proxy_pass  http://image-web.blog.svc.cluster.local;
         }
