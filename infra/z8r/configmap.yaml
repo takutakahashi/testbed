@@ -22,7 +22,7 @@ data:
       replica: "ws:backup/tank/enctv"
     - master: "kvm:tank/tv"
       replica: "ws:backup/tank/tv"
-    - master: "ws:fastpool/aki"
+    - master: "ws:backup/fastpool/aki"
       replica: "ws:localpool/aki"
       #    - master: "node02:fastpool/pv"
       #      replica: "ws:backup/fastpool/pv"
