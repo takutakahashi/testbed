@@ -11,9 +11,12 @@ data:
       peer-address: 10.10.0.1
     address-pools:
     - name: default
+      protocol: layer2
+      addresses:
+      - 10.10.0.160-10.10.0.250
+    - name: bgp
       protocol: bgp
       avoid-buggy-ips: true
       addresses:
       - 10.30.0.10-10.30.254.254
-      - 10.10.0.165-10.10.0.166
 
