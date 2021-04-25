@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: autobuy
 spec:
-  schedule: "0 0 */2 * *"
+  schedule: "0 0 * * *"
   jobTemplate:
     spec:
       template:
@@ -21,5 +21,5 @@ spec:
             - --ticker
             - ETH_JPY
             - --jpy
-            - "2000"
+            - "1000"
 
