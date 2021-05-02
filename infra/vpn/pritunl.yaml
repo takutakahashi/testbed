@@ -25,6 +25,9 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
+  annotations:
+    zerotier.takutakahashi.dev/enable: "true"
+    zerotier.takutakahashi.dev/hostname: vpn.zt.lab.takutakahashi.dev
   labels:
     app: pritunl
   name: pritunl
