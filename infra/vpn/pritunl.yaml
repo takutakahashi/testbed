@@ -25,15 +25,12 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  annotations:
-    zerotier.takutakahashi.dev/enable: "true"
-    zerotier.takutakahashi.dev/hostname: vpn.zt.lab.takutakahashi.dev
   labels:
     app: pritunl
   name: pritunl
-  namespace: vpn
 spec:
   type: LoadBalancer
+  loadBalancerIP: 10.30.0.100
   ports:
   - name: http
     port: 80
@@ -55,3 +52,4 @@ spec:
     protocol: TCP
   selector:
     app: pritunl
+
