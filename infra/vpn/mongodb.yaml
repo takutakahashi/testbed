@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mongodb
+  labels:
+    app: mongodb
+spec:
+  selector:
+    matchLabels:
+      app: mongodb
+  template:
+    metadata:
+      labels:
+        app: mongodb
+    spec:
+      containers:
+        - name: mongodb
+          image: mongo:4.1.13-bionic
+          args:
+            - "mongod"
+            - "--bind_ip_all"
+          env:
+            - name: "MONGO_INITDB_DATABASE"
+              value: "pritunl"
+          volumeMounts:
+            - mountPath: /data/db
+              name: storage
+      volumes:
+        - name: storage
+          persistentVolumeClaim:
+            claimName: mongodb
+---
+
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: mongodb
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: rook-ceph-block
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mongodb
+  name: mongodb
+spec:
+  type: ClusterIP
+  ports:
+  - name: mongo
+    port: 27017
+    protocol: TCP
+  selector:
+    app: mongodb
