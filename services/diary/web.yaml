@@ -23,16 +23,43 @@ spec:
         app: diary
         role: web
     spec:
+      initContainers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -c
+          - "cp -r /src/* /dst/"
+        name: init-worker
+        volumeMounts:
+        - mountPath: /src
+          name: public
+        - mountPath: /dst
+          name: tmp
       containers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -c
+          - "while true; do cp -r /src/* /dst/ ; sleep 10; done"
+        name: worker
+        volumeMounts:
+        - mountPath: /src
+          name: public
+        - mountPath: /dst
+          name: tmp
       - image: nginx
         imagePullPolicy: Always
         name: server
         volumeMounts:
         - mountPath: /usr/share/nginx/html
-          name: public
+          name: tmp
         - mountPath: /etc/nginx/conf.d
           name: config
       volumes:
+      - name: tmp
+        emptyDir: {}
       - name: public
         persistentVolumeClaim:
           claimName: diary-assets

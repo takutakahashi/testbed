@@ -42,12 +42,14 @@ spec:
       - image: takutakahashi/blog.tpl
         imagePullPolicy: Always
         env:
+        - name: HUGO_ENV
+          value: production
         - name: BLOG_TITLE
           value: takutakahashi.dev
         - name: BLOG_URL
           value: www.takutakahashi.dev
         - name: BLOG_GA
-          value: "UA-166034194-1"
+          value: "G-6ZZ1BT09E9"
         - name: BLOG_THEME_URL
           value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
         name: worker
@@ -86,10 +88,37 @@ spec:
       - name: public
         persistentVolumeClaim:
           claimName: techblog-assets
+      - name: tmp
+        emptyDir: {}
       - name: config
         configMap:
           name: diary-nginx
+      initContainers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -c
+          - "cp -r /src/* /dst/"
+        name: init-worker
+        volumeMounts:
+        - mountPath: /src
+          name: public
+        - mountPath: /dst
+          name: tmp
       containers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -c
+          - "while true; do cp -r /src/* /dst/ ; sleep 10; done"
+        name: worker
+        volumeMounts:
+        - mountPath: /src
+          name: public
+        - mountPath: /dst
+          name: tmp
       - image: nginx
         imagePullPolicy: Always
         name: server
