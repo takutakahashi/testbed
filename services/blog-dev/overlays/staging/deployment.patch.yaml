@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: devblog-worker
+spec:
+  template:
+    spec:
+      containers:
+      - name: worker
+        env:
+        - name: BLOG_URL
+          value: www.stg.in.takutakahashi.dev
+        - name: BLOG_GA
+          value: ""
+        - name: BLOG_THEME_URL
+          value: "https://github.com/Mitrichius/hugo-theme-anubis.git"

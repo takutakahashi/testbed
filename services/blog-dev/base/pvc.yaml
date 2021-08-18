@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: techblog-assets
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: ephemeral-rwx
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: image-assets
+spec:
+  accessModes:
+  - ReadWriteMany
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: ephemeral-rwx
