@@ -5,7 +5,6 @@ metadata:
     app: devblog
     role: worker
   name: devblog-worker
-  namespace: blog
 spec:
   replicas: 1
   selector:
@@ -90,9 +89,6 @@ spec:
           claimName: techblog-assets
       - name: tmp
         emptyDir: {}
-      - name: config
-        configMap:
-          name: diary-nginx
       initContainers:
       - image: ubuntu
         imagePullPolicy: Always
@@ -125,5 +121,3 @@ spec:
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: public
-        - mountPath: /etc/nginx/conf.d
-          name: config
