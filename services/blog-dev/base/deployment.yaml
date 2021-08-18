@@ -50,7 +50,7 @@ spec:
         - name: BLOG_GA
           value: "G-6ZZ1BT09E9"
         - name: BLOG_THEME_URL
-          value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
+          value: "https://github.com/takutakahashi/hugo-theme-anubis.git"
         - name: BLOG_THEME_BRANCH
           value: "master"
         name: worker
@@ -91,6 +91,9 @@ spec:
           claimName: techblog-assets
       - name: tmp
         emptyDir: {}
+      - name: nginx
+        configMap:
+          name: devblog-nginx
       initContainers:
       - image: ubuntu
         imagePullPolicy: Always
@@ -123,3 +126,5 @@ spec:
         volumeMounts:
         - mountPath: /usr/share/nginx/html
           name: public
+        - mountPath: /etc/nginx/conf.d
+          name: nginx
