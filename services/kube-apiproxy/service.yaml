@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: k8s.lab.takutakahashi.dev
+  labels:
+    app: kube-apiproxy
+  name: kube-apiproxy
+  namespace: default
+spec:
+  ports:
+  - name: https
+    port: 6443
+    protocol: TCP
+    targetPort: 443
+  selector:
+    app: kubeapi-proxy
+  type: LoadBalancer
