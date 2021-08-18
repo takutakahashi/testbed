@@ -38,7 +38,7 @@ spec:
         - mountPath: /content
           name: content
       containers:
-      - image: takutakahashi/blog.tpl
+      - image: ghcr.io/takutakahashi/blog.tpl:v1.0.0
         imagePullPolicy: Always
         env:
         - name: HUGO_ENV
@@ -51,6 +51,8 @@ spec:
           value: "G-6ZZ1BT09E9"
         - name: BLOG_THEME_URL
           value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
+        - name: BLOG_THEME_BRANCH
+          value: "master"
         name: worker
         volumeMounts:
         - mountPath: /src/public
