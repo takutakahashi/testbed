@@ -10,7 +10,9 @@ spec:
         env:
         - name: BLOG_URL
           value: www.stg.in.takutakahashi.dev
+        - name: BLOG_THEME_URL
+          value: "https://github.com/takutakahashi/hugo-theme-anubis.git"
+        - name: BLOG_THEME_BRANCH
+          value: "staging"
         - name: BLOG_GA
           value: ""
-        - name: BLOG_THEME_URL
-          value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
