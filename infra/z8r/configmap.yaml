@@ -4,6 +4,15 @@ metadata:
   name: z8r-config
   namespace: z8r
 data:
+  config.yaml: |
+    - master: "kvm:tank/all"
+      replica: "ws:backup/new/tank/all"
+    - master: "kvm:tank/etc"
+      replica: "ws:backup/new/tank/etc"
+    - master: "kvm:tank/enctv"
+      replica: "ws:backup/new/tank/enctv"
+    - master: "kvm:tank/tv"
+      replica: "ws:backup/new/tank/tv"
   snapshot.yaml: |
     targets:
     - kvm:tank/all
@@ -13,20 +22,3 @@ data:
     - node02:fastpool/pv
     - node02:fastpool/tv
     - node02:fastpool/aki
-  config.yaml: |
-    - master: "kvm:tank/all"
-      replica: "ws:backup/tank/all"
-    - master: "kvm:tank/etc"
-      replica: "ws:backup/tank/etc"
-    - master: "kvm:tank/enctv"
-      replica: "ws:backup/tank/enctv"
-    - master: "kvm:tank/tv"
-      replica: "ws:backup/tank/tv"
-    - master: "ws:backup/fastpool/aki"
-      replica: "ws:localpool/aki"
-      #    - master: "node02:fastpool/pv"
-      #      replica: "ws:backup/fastpool/pv"
-      #    - master: "node02:fastpool/tv"
-      #      replica: "ws:backup/fastpool/tv"
-      #    - master: "node02:fastpool/aki"
-      #      replica: "ws:backup/fastpool/aki"

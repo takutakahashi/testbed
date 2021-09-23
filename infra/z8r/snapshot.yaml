@@ -1,0 +1,41 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  labels:
+    app: snapshot
+  name: snapshot
+  namespace: z8r
+spec:
+  schedule: "0 * * * *"
+  successfulJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: snapshot
+        spec:
+          restartPolicy: Never
+          serviceAccount: z8r
+          volumes:
+          - name: config
+            configMap:
+              name: z8r-config
+          - name: ssh-key
+            secret:
+              secretName: z8r-ssh-keys
+          containers:
+          - image: ghcr.io/takutakahashi/z8r:v0.6.1
+            imagePullPolicy: Always
+            name: app
+            volumeMounts:
+            - name: config
+              mountPath: /etc/z8r
+            - name: ssh-key
+              mountPath: /root/.ssh
+            env:
+              - name: DEBUG
+                value: "false"
+            command:
+              - /entrypoint_snapshot.sh
+

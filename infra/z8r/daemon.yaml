@@ -1,0 +1,49 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app: z8r
+    tier: daemon
+  name: node-daemon
+  namespace: z8r
+spec:
+  #  strategy:
+  #    type: Recreate
+  selector:
+    matchLabels:
+      app: z8r
+      tier: daemon
+  template:
+    metadata:
+      labels:
+        app: z8r
+        tier: daemon
+    spec:
+      serviceAccount: z8r
+      nodeSelector:
+        z8r: "true"
+      volumes:
+      - name: config
+        configMap:
+          name: z8r-config
+      - name: ssh-key
+        secret:
+          secretName: z8r-ssh-keys
+      containers:
+      - image: ghcr.io/takutakahashi/z8r:v0.6.1
+        imagePullPolicy: Always
+        name: app
+        securityContext:
+          privileged: true
+        command:
+        - /entrypoint_daemon.sh
+        volumeMounts:
+        - name: config
+          mountPath: /etc/z8r
+        - name: ssh-key
+          mountPath: /root/.ssh
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
