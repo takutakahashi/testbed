@@ -1,0 +1,9 @@
+resources:
+  - 00-namespace.yaml
+  - configmap.yaml
+  - daemon.yaml
+  - keys.yaml
+  - rbac.yaml
+  - replicator.yaml
+  - service.yaml
+  - snapshot.yaml
