@@ -1,0 +1,5 @@
+resources:
+  - ./mysql.yaml
+  - ./px4.yaml
+  - ./dvb.yaml
+  - ./master.yaml

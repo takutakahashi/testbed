@@ -21,6 +21,10 @@ spec:
         operator: "Equal"
         value: "arm"
         effect: "NoSchedule"
+      - effect: NoExecute
+        key: kubernetes.io/arch
+        operator: Equal
+        value: arm
       nodeSelector:
         app: mirakurun
         tuner: px4
