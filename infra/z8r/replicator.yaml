@@ -6,7 +6,7 @@ metadata:
   name: replicator
   namespace: z8r
 spec:
-  schedule: "0 * * * *"
+  schedule: "30 * * * *"
   successfulJobsHistoryLimit: 5
   jobTemplate:
     spec:
