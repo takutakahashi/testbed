@@ -1,0 +1,8 @@
+resources:
+  - ./configmap.yaml
+  - ./worker.yaml
+  - ./web.yaml
+  - ./sealedsecret.yaml
+  - ./assets.yaml
+  - ./service.yaml
+  - ./ingress.yaml

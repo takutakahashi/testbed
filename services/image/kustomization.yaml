@@ -1,0 +1,4 @@
+resources:
+  - ./web.yaml
+  - ./assets.yaml
+  - ./service.yaml
