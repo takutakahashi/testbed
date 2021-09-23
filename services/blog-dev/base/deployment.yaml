@@ -5,7 +5,6 @@ metadata:
     app: devblog
     role: worker
   name: devblog-worker
-  namespace: blog
 spec:
   replicas: 1
   selector:
@@ -39,17 +38,21 @@ spec:
         - mountPath: /content
           name: content
       containers:
-      - image: takutakahashi/blog.tpl
+      - image: ghcr.io/takutakahashi/blog.tpl:v1.0.0
         imagePullPolicy: Always
         env:
+        - name: HUGO_ENV
+          value: production
         - name: BLOG_TITLE
           value: takutakahashi.dev
         - name: BLOG_URL
           value: www.takutakahashi.dev
         - name: BLOG_GA
-          value: "UA-166034194-1"
+          value: "G-6ZZ1BT09E9"
         - name: BLOG_THEME_URL
-          value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
+          value: "https://github.com/takutakahashi/hugo-theme-anubis.git"
+        - name: BLOG_THEME_BRANCH
+          value: "master"
         name: worker
         volumeMounts:
         - mountPath: /src/public
@@ -86,10 +89,37 @@ spec:
       - name: public
         persistentVolumeClaim:
           claimName: techblog-assets
-      - name: config
+      - name: tmp
+        emptyDir: {}
+      - name: nginx
         configMap:
-          name: diary-nginx
+          name: devblog-nginx
+      initContainers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -c
+          - "cp -r /src/* /dst/"
+        name: init-worker
+        volumeMounts:
+        - mountPath: /src
+          name: public
+        - mountPath: /dst
+          name: tmp
       containers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -c
+          - "while true; do cp -r /src/* /dst/ ; sleep 10; done"
+        name: worker
+        volumeMounts:
+        - mountPath: /src
+          name: public
+        - mountPath: /dst
+          name: tmp
       - image: nginx
         imagePullPolicy: Always
         name: server
@@ -97,4 +127,4 @@ spec:
         - mountPath: /usr/share/nginx/html
           name: public
         - mountPath: /etc/nginx/conf.d
-          name: config
+          name: nginx

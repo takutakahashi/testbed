@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: kubeapi-proxy
+  name: kubeapi-proxy
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kubeapi-proxy
+  template:
+    metadata:
+      labels:
+        app: kubeapi-proxy
+    spec:
+      containers:
+      - image: takutakahashi/kube-apiproxy
+        imagePullPolicy: Always
+        name: proxy
