@@ -36,12 +36,14 @@ spec:
         securityContext:
           privileged: true
         command:
-        - /entrypoint_daemon.sh
+        - bash
+        - -c
+        - "mkdir -p /root/.ssh && cp /opt/ssh/authorized_keys /root/.ssh/ && /entrypoint_daemon.sh"
         volumeMounts:
         - name: config
           mountPath: /etc/z8r
         - name: ssh-key
-          mountPath: /root/.ssh
+          mountPath: /opt/ssh
         env:
         - name: NODE_NAME
           valueFrom:
