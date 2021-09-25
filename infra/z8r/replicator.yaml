@@ -32,10 +32,11 @@ spec:
             - name: config
               mountPath: /etc/z8r
             - name: ssh-key
-              mountPath: /root/.ssh
+              mountPath: /opt/ssh
             env:
               - name: DEBUG
                 value: "false"
             command:
-            - /entrypoint_replicator.sh
-
+              - bash
+              - -c
+              - "cp /opt/ssh/id_rsa /root/.ssh && chmod 600 /root/.ssh/id_rsa && /entrypoint_replicator.sh"
