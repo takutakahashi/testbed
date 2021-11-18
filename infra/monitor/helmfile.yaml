@@ -1,0 +1,9 @@
+repositories:
+- name: prometheus-community
+  url: https://prometheus-community.github.io/helm-charts
+releases:
+  - name: prometheus-stack
+    namespace: monitor
+    chart: prometheus-community/kube-prometheus-stack
+    values:
+      - ./prometheus-stack.yaml
