@@ -93,13 +93,10 @@ data:
   # CSI_PLUGIN_NODE_AFFINITY: "role=storage-node; storage=rook, ceph"
   # (Optional) CEPH CSI plugin tolerations list. Put here list of taints you want to tolerate in YAML format.
   # CSI plugins need to be started on all the nodes where the clients need to mount the storage.
-  # CSI_PLUGIN_TOLERATIONS: |
-  #   - effect: NoSchedule
-  #     key: node-role.kubernetes.io/controlplane
-  #     operator: Exists
-  #   - effect: NoExecute
-  #     key: node-role.kubernetes.io/etcd
-  #     operator: Exists
+  CSI_PLUGIN_TOLERATIONS: |
+    - effect: NoExecute
+      key: kubernetes.io/arch
+      value: arm
 
   # (Optional) CEPH CSI RBD provisioner resource requirement list, Put here list of resource
   # requests and limits you want to apply for provisioner pod

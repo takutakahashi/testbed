@@ -1,0 +1,8 @@
+resources:
+  - ./operator.yaml
+  - ./snapshotclass.yaml
+  - ./cluster.yaml
+  - ./ephemeral-fs.yaml
+  - ./storageclass.yaml
+  - ./common.yaml
+  - ./pool.yaml
