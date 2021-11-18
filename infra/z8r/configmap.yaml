@@ -13,6 +13,8 @@ data:
       replica: "ws:backup/new/tank/enctv"
     - master: "kvm:tank/tv"
       replica: "ws:backup/new/tank/tv"
+    - master: "ws:localpool/aki"
+      replica: "ws:backup/localpool/aki"
   snapshot.yaml: |
     targets:
     - kvm:tank/all
@@ -20,5 +22,4 @@ data:
     - kvm:tank/enctv
     - kvm:tank/tv
     - node02:fastpool/pv
-    - node02:fastpool/tv
-    - node02:fastpool/aki
+    - ws:localpool/aki
