@@ -31,6 +31,8 @@ spec:
               value: "G-P6ESSZ61CV"
             - name: BLOG_THEME_URL
               value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
+            - name: ONCE
+              value: "--once"
             image: ghcr.io/takutakahashi/blog.tpl:v1.3.0
             imagePullPolicy: Always
             name: worker
