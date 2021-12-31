@@ -1,5 +1,5 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: batch/v1beta1
+kind: CronJob
 metadata:
   labels:
     app: diary
@@ -7,48 +7,46 @@ metadata:
   name: diary-worker
   namespace: blog
 spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: diary
-      role: worker
-  strategy:
-    type: Recreate
-  template:
-    metadata:
-      labels:
-        app: diary
-        role: worker
+  schedule: "0 * * * *"
+  suspend: false
+  jobTemplate:
     spec:
-      containers:
-      - envFrom:
-        - secretRef:
-            name: diary-secret
-        env:
-        - name: BLOG_TITLE
-          value: diary.takutakahashi.dev
-        - name: BLOG_URL
-          value: diary.takutakahashi.dev
-        - name: BLOG_GA
-          value: "G-P6ESSZ61CV"
-        - name: BLOG_THEME_URL
-          value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
-        image: takutakahashi/blog.tpl
-        imagePullPolicy: Always
-        name: worker
-        volumeMounts:
-        - mountPath: /src/public
-          name: public
-        - mountPath: /src/images
-          name: images
-        - mountPath: /src/content/posts
-          name: content
-      volumes:
-      - name: public
-        persistentVolumeClaim:
-          claimName: diary-assets
-      - name: images
-        persistentVolumeClaim:
-          claimName: image-assets
-      - emptyDir: {}
-        name: content
+      template:
+        metadata:
+          labels:
+            app: diary
+            role: worker
+        spec:
+          restartPolicy: Never
+          containers:
+          - envFrom:
+            - secretRef:
+                name: diary-secret
+            env:
+            - name: BLOG_TITLE
+              value: diary.takutakahashi.dev
+            - name: BLOG_URL
+              value: diary.takutakahashi.dev
+            - name: BLOG_GA
+              value: "G-P6ESSZ61CV"
+            - name: BLOG_THEME_URL
+              value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
+            image: ghcr.io/takutakahashi/blog.tpl:v1.3.0
+            imagePullPolicy: Always
+            name: worker
+            volumeMounts:
+            - mountPath: /src/public
+              name: public
+            - mountPath: /src/images
+              name: images
+            - mountPath: /src/content/posts
+              name: content
+          volumes:
+          - name: public
+            persistentVolumeClaim:
+              claimName: diary-assets
+          - name: images
+            persistentVolumeClaim:
+              claimName: image-assets
+          - emptyDir: {}
+            name: content
