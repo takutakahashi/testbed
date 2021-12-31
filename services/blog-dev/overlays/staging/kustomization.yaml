@@ -3,4 +3,4 @@ resources:
   - ../../base
 patches:
   - ingress.patch.yaml
-  - deployment.patch.yaml
+  - cronjob.patch.yaml

@@ -1,0 +1,132 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  labels:
+    app: devblog
+    role: worker
+  name: devblog-worker
+spec:
+  schedule: "*/10 * * * *"
+  suspend: false
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: devblog
+            role: worker
+        spec:
+          restartPolicy: Never
+          volumes:
+          - name: public
+            persistentVolumeClaim:
+              claimName: techblog-assets
+          - name: images
+            persistentVolumeClaim:
+              claimName: image-assets
+          - name: content
+            emptyDir: {}
+          initContainers:
+          - image: takutakahashi/blog
+            imagePullPolicy: Always
+            name: mv
+            command:
+              - bash
+              - -c
+              - "mv /src/content/posts/* /content"
+            volumeMounts:
+            - mountPath: /content
+              name: content
+          containers:
+          - image: ghcr.io/takutakahashi/blog.tpl:v1.3.0
+            imagePullPolicy: Always
+            env:
+            - name: HUGO_ENV
+              value: production
+            - name: BLOG_TITLE
+              value: takutakahashi.dev
+            - name: BLOG_URL
+              value: www.takutakahashi.dev
+            - name: BLOG_GA
+              value: "G-6ZZ1BT09E9"
+            - name: BLOG_THEME_URL
+              value: "https://github.com/takutakahashi/hugo-theme-anubis.git"
+            - name: BLOG_THEME_BRANCH
+              value: "master"
+            - name: ONCE
+              value: "--once"
+            name: worker
+            volumeMounts:
+            - mountPath: /src/public
+              name: public
+            - mountPath: /src/images
+              name: images
+            - mountPath: /src/content/posts
+              name: content
+            envFrom:
+            - secretRef:
+                name: devblog-secret
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: devblog
+    role: web
+  name: devblog-web
+  namespace: blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devblog
+      role: web
+  template:
+    metadata:
+      labels:
+        app: devblog
+        role: web
+    spec:
+      volumes:
+      - name: public
+        persistentVolumeClaim:
+          claimName: techblog-assets
+      - name: tmp
+        emptyDir: {}
+      - name: nginx
+        configMap:
+          name: devblog-nginx
+      initContainers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -c
+          - "cp -r /src/* /dst/"
+        name: init-worker
+        volumeMounts:
+        - mountPath: /src
+          name: public
+        - mountPath: /dst
+          name: tmp
+      containers:
+      - image: ubuntu
+        imagePullPolicy: Always
+        command:
+          - bash
+          - -c
+          - "while true; do cp -r /src/* /dst/ ; sleep 10; done"
+        name: worker
+        volumeMounts:
+        - mountPath: /src
+          name: public
+        - mountPath: /dst
+          name: tmp
+      - image: nginx
+        imagePullPolicy: Always
+        name: server
+        volumeMounts:
+        - mountPath: /usr/share/nginx/html
+          name: public
+        - mountPath: /etc/nginx/conf.d
+          name: nginx
