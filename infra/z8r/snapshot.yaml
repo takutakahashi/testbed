@@ -6,7 +6,7 @@ metadata:
   name: snapshot
   namespace: z8r
 spec:
-  schedule: "0 * * * *"
+  schedule: "45 * * * *"
   successfulJobsHistoryLimit: 5
   jobTemplate:
     spec:

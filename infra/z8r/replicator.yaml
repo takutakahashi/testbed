@@ -6,7 +6,7 @@ metadata:
   name: replicator
   namespace: z8r
 spec:
-  schedule: "30 * * * *"
+  schedule: "15 * * * *"
   suspend: false
   concurrencyPolicy: Forbid
   successfulJobsHistoryLimit: 5
