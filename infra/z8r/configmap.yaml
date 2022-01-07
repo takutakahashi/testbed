@@ -7,14 +7,14 @@ data:
   config.yaml: |
     - master: "kvm:tank/all"
       replica: "ws:backup/new/tank/all"
-    - master: "kvm:tank/etc"
-      replica: "ws:backup/tank/etc"
+    - master: "ws:localpool/aki"
+      replica: "ws:backup/localpool/aki"
     - master: "kvm:tank/enctv"
       replica: "ws:backup/new/tank/enctv"
     - master: "kvm:tank/tv"
       replica: "ws:backup/new/tank/tv"
-    - master: "ws:localpool/aki"
-      replica: "ws:backup/localpool/aki"
+    - master: "kvm:tank/etc"
+      replica: "ws:backup/tank/etc"
   snapshot.yaml: |
     targets:
     - kvm:tank/all

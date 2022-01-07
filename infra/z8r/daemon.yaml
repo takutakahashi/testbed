@@ -30,7 +30,7 @@ spec:
         secret:
           secretName: z8r-ssh-keys
       containers:
-      - image: ghcr.io/takutakahashi/z8r:v0.6.1
+      - image: ghcr.io/takutakahashi/z8r:v0.7.0
         imagePullPolicy: Always
         name: app
         securityContext:
@@ -38,7 +38,7 @@ spec:
         command:
         - bash
         - -c
-        - "mkdir -p /root/.ssh && cp /opt/ssh/authorized_keys /root/.ssh/ && /entrypoint_daemon.sh"
+        - "mkdir -p /root/.ssh && cp /opt/ssh/authorized_keys /root/.ssh/ && cp /opt/ssh/id_rsa /root/.ssh && chmod 600 /root/.ssh/id_rsa && /entrypoint_daemon.sh"
         volumeMounts:
         - name: config
           mountPath: /etc/z8r

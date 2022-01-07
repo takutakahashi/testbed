@@ -25,7 +25,7 @@ spec:
             secret:
               secretName: z8r-ssh-keys
           containers:
-          - image: ghcr.io/takutakahashi/z8r:v0.6.1
+          - image: ghcr.io/takutakahashi/z8r:v0.7.0
             imagePullPolicy: Always
             name: app
             volumeMounts:
