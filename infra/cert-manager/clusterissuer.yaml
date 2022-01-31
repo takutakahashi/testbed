@@ -1,0 +1,45 @@
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: letsencrypt
+spec:
+  acme:
+    email: taku.takahashi120@gmail.com
+    preferredChain: ""
+    privateKeySecretRef:
+      name: cert-manager-le-private-key
+    server: https://acme-v02.api.letsencrypt.org/directory
+    solvers:
+    - dns01:
+        route53:
+          accessKeyID: AKIASY6UDK32YLA6WPEM
+          hostedZoneID: Z0971128BW4DIZDJ3HL3
+          region: us-east-1
+          secretAccessKeySecretRef:
+            key: secret-access-key
+            name: lab-takutakahashi-dev-route53-secret
+      selector:
+        dnsZones:
+        - lab.takutakahashi.dev
+    - dns01:
+        route53:
+          accessKeyID: AKIASY6UDK32YLA6WPEM
+          hostedZoneID: Z08206143OKX3EUW2ALA7
+          region: us-east-1
+          secretAccessKeySecretRef:
+            key: secret-access-key
+            name: lab-takutakahashi-dev-route53-secret
+      selector:
+        dnsZones:
+        - takutakahashi.dev
+    - dns01:
+        route53:
+          accessKeyID: AKIASY6UDK32YLA6WPEM
+          hostedZoneID: Z047463314B42TUZOWL3L
+          region: us-east-1
+          secretAccessKeySecretRef:
+            key: secret-access-key
+            name: lab-takutakahashi-dev-route53-secret
+      selector:
+        dnsZones:
+        - in.takutakahashi.dev
