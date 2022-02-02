@@ -2,3 +2,4 @@ resources:
   - cert-manager
   - ingress-nginx
   - bastion
+  - external-dns
