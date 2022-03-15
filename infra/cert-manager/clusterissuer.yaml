@@ -32,6 +32,7 @@ spec:
       selector:
         dnsZones:
         - takutakahashi.dev
+        - gp.takutakahashi.dev
     - dns01:
         route53:
           accessKeyID: AKIASY6UDK32YLA6WPEM
