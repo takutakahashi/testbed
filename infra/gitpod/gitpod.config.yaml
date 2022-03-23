@@ -3,7 +3,7 @@ authProviders:
   - kind: secret
     name: public-github
 blockNewUsers:
-  enabled: false
+  enabled: true
   passlist: []
 certificate:
   kind: secret
