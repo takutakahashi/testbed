@@ -1,0 +1,16 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: public-github
+  namespace: gitpod
+spec:
+  encryptedData:
+    provider: AgAMnfBB3U9HDG4vPgCCW0j17sUXLvKJMb/L1MwFIJ41xFpZ6Kd+rAVa2n8zzE/y6JVFFVi1nqhhs8Yrg4LOngj0rApXYTsyptIOBePTb0RTRrP/J8FnCY7b08pt4uPRBkmMFoxa+iy+OFazRtRZnRte42c8RPs7a9afVRhkJhIzXXwvuJ9FnWzE6OKSwEDrcNPdPaGtHVbV7KvtVMa8unBKrvE8zxIrSxdDFfYJytd4ao1gMBA6jnd/KtBwZ0D/XUaX22VtANo1uApxl9g9bPA+ccHngo5ccFLE7sC/UvTQ0OLUFBiatn8sJmGhBC0sqqAKttTaKdw/ObrRUI5PHgRIB65vInv/NXK1jV92IUFJGc3HoOjFwXxqS/1hWrV6HnQS/jyUhNSmdh35dC6Va2JJpuK2fbD7Cs+wVb2cXzJeDQAYYwXgSmhWZwxi56tSTZp1qzTLxKZ5RaZcQwJ2bLtuctqx4XHCE5zs0lCNpwOW7EEnYOEoALy5XaJ6fzg8q1zQosPiDUe7U3T6o9Vym6u4s/j1eUGdgexL30vpA5ehIBDpMU/KAjGlZwFdbW77qVLkqk1EYU0B3BXTAUcuMIsQZHqoj6pYCvZK+09OIfDSiXgb10Wm4GyNJ60B1RS2qzVRAJy0zkmc3XVRqGn8o53FJug+CKiQphlDhXvs+oGvVcJO/Hi0DHwpwUa2gujKS+AcXqda4UVubJYCiyZBIsbk3WOvdFidfYwlUbK/gU5bcwA8nsyc6yBlSrb3Olb1fXSXCXWbP/Es14awairhXJbSGERxhfHUQ/EinnvRoi+d5rHh3fEyLTqS8xPPH2PXEYh8fJJsHk142xmmg+RdHKMUj6od1NnZUjRgUdjczlZnJ8L+YQ+vsTAI3Ly8xFwUoxDr/hWlWHEW6YtcJ6R1AQgP+YEF3J4Xl4VhvWRdgB99BvuABSJQyFnsMfuOwvIVwBqmyCLDevb1WwUK3aEVMjnYsbG7Qi+miBox4Kecsf/T7BY9GTJwDAxdDKPzm38Xc9zbV0jrxn/VPlm0wJxJ+6SGURE=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: public-github
+      namespace: gitpod
+    type: Opaque
+

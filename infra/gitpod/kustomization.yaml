@@ -1,5 +1,7 @@
 namespace: gitpod
 resources:
+  - database-token.yaml
+  - public-github.yaml
   - certificate.yaml
   - db/resources.yaml
   - gitpod.yaml
