@@ -1,0 +1,3 @@
+tasks:
+  - name: Set Glados K8s context
+    command: echo $KUBECONFIGFILE | base64 -d > ~/.kube/config
