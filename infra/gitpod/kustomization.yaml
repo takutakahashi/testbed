@@ -1,0 +1,5 @@
+namespace: gitpod
+resources:
+  - certificate.yaml
+  - db/resources.yaml
+  - gitpod.yaml
