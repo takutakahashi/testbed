@@ -1,0 +1,2 @@
+resources:
+  - https://openebs.github.io/charts/zfs-operator.yaml

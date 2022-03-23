@@ -3,3 +3,4 @@ resources:
   - ingress-nginx
   - bastion
   - external-dns
+  - zfs-localpv
