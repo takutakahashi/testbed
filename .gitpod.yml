@@ -1,7 +1,5 @@
 image:
   file: .gitpod.Dockerfile
 tasks:
-  - name: create .kube
-    command: mkdir -p ~/.kube
   - name: Set Glados K8s context
     command: echo $KUBECONFIGFILE | base64 -d > ~/.kube/config
