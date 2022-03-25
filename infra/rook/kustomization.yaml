@@ -1,8 +1,12 @@
 resources:
   - ./operator.yaml
+  - ./common.yaml
+  - ./crds.yaml
+#  - ./cluster.yaml
   - ./snapshotclass.yaml
-  - ./cluster.yaml
   - ./ephemeral-fs.yaml
   - ./storageclass.yaml
-  - ./common.yaml
   - ./pool.yaml
+images:
+- name: "rook/ceph"
+  newTag: "v1.8.3"
