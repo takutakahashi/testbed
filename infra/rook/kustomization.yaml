@@ -1,11 +1,11 @@
 resources:
-  - ./operator.yaml
-  - ./common.yaml
   - ./crds.yaml
-#  - ./cluster.yaml
+  - ./cluster.yaml
+  - https://raw.githubusercontent.com/rook/rook/v1.8.3/deploy/examples/operator.yaml
   - ./snapshotclass.yaml
   - ./ephemeral-fs.yaml
   - ./storageclass.yaml
+  - https://raw.githubusercontent.com/rook/rook/v1.8.3/deploy/examples/common.yaml
   - ./pool.yaml
 images:
 - name: "rook/ceph"
