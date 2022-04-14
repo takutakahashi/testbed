@@ -1,0 +1,9 @@
+namespace: subnet-router
+resources:
+  - namespace.yaml
+  - cm.yaml
+  - role.yaml
+  - rolebinding.yaml
+  - sa.yaml
+  - token.yaml
+  - proxy.yaml

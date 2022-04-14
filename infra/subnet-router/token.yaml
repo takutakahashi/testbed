@@ -1,0 +1,15 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: tailscale-auth
+spec:
+  encryptedData:
+    AUTH_KEY: AgBLU7UEAYQbhdSe/ZvIFFKQ+X48s1Y1Fq8Cu/QVG0iEm/NhbMgpd8qroTo2ovTaPDRUDXhU5QJvfmrfAiTuoGquFExw48ddkWjIEr/6lItVwMmIqM+J9zlVJ2lmG9zSgtgiPP1BQdwY3dr6aLyibtvno4orOiK3LzYq4CKxC2a7+GMDh6z7E5bZvfUpHJPSFlvrfSZrsP0852f5YGzuBpJwWm43Mm34TaDgwrW+uWIcZuQtfqiOzvc0R1UdUKJMEJCXGSfoMMlZwqhNFqrBSi6QqZ3ywVoBFTVXzGFL/zF28I3J1mkX9+dwO2jfcQIdJwb800v9inXf3POrq0n8zKxT5o+6t9Z07mLSGZVd2gnmajekog7tOFeagFSsq4dYJTrq988ddeaOzE682jAW3vjfcMsrfx6QCsLTlx9kZPYQS0YqM9xonKZK2TplWxDIO1sh1o4sFWn2QrSVBdlop7C+UotHaZQ76TQXF1e4ihtcE55rbS2HWmYSjTIBQEKaOwF1mEn1QcerSMSLVoQlAQAEGCSCli96HvKNL0UOGJRUXifX6W6+JhN2YQc4OmN1YG0bDh+C3gDY2DbfUXZXuih5cxkN6G1cjlWzeUE5n8c33n2tqilRnbkRelDoCyKa/lcreoCuogeZUm/gGbHeLDraBz37Q20fIjoTN1ixqlL1x5HOa86qNQj9f2JGD+oIPZX8/J2+rMAR9ZSsOXtK8NwySYmVEwruM5MKhXFTGuR6/5FxMIix8ISAcQ==
+  template:
+    data: null
+    metadata:
+      creationTimestamp: null
+      name: tailscale-auth
+      namespace: subnet-router
+

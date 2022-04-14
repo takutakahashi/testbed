@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tailscale
+  namespace: gitpod
+spec:
+  type: ExternalName
+  externalName: 100.81.219.231
