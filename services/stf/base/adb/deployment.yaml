@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: adb
+  name: adb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: adb
+  template:
+    metadata:
+      labels:
+        app: adb
+    spec:
+      volumes:
+      - name: usb
+        hostPath:
+          path: /dev/bus/usb
+      containers:
+      - image: devicefarmer/adb:latest
+        imagePullPolicy: Always
+        name: adb
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - name: usb
+          mountPath: /dev/bus/usb

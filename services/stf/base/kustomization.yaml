@@ -1,0 +1,6 @@
+namespace: stf
+resources:
+- namespace.yaml
+- rethinkdb
+- adb
+- stf
