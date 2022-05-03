@@ -1,0 +1,28 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: stf
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: stf.in.takutakahashi.dev
+  name: stf
+spec:
+  ports:
+  - name: port1
+    port: 7100
+    protocol: TCP
+  - name: port2
+    port: 7110
+    protocol: TCP
+  - name: port3
+    port: 7400
+    protocol: TCP
+  - name: port4
+    port: 7401
+    protocol: TCP
+  - name: port5
+    port: 7402
+    protocol: TCP
+  selector:
+    app: stf
+  type: LoadBalancer

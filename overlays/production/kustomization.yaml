@@ -3,3 +3,4 @@ resources:
   - ../../services/blog-dev/overlays/production
   - ../../services/diary
   - ../../services/kube-apiproxy
+  - ../../services/stf

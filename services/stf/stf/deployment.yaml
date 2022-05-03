@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stf
+  name: stf
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stf
+  template:
+    metadata:
+      labels:
+        app: stf
+    spec:
+      containers:
+      - image: devicefarmer/stf
+        imagePullPolicy: Always
+        name: app
+        command:
+        - stf
+        - local
+        - --adb-host
+        - adb
+        - --public-ip
+        - 10.30.0.11
+        - --provider-min-port
+        - "7400"
+        - --provider-max-port
+        - "7402"
