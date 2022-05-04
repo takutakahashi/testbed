@@ -14,15 +14,39 @@ spec:
   - name: port2
     port: 7110
     protocol: TCP
-  - name: port3
-    port: 7400
-    protocol: TCP
-  - name: port4
-    port: 7401
-    protocol: TCP
-  - name: port5
-    port: 7402
-    protocol: TCP
+  - port: 31600
+    nodePort: 31600
+    name: exposed-port-31600
+  - port: 31601
+    nodePort: 31601
+    name: exposed-port-31601
+  - port: 31602
+    nodePort: 31602
+    name: exposed-port-31602
+  - port: 31603
+    nodePort: 31603
+    name: exposed-port-31603
+  - port: 31604
+    nodePort: 31604
+    name: exposed-port-31604
+  - port: 31605
+    nodePort: 31605
+    name: exposed-port-31605
+  - port: 31606
+    nodePort: 31606
+    name: exposed-port-31606
+  - port: 31607
+    nodePort: 31607
+    name: exposed-port-31607
+  - port: 31608
+    nodePort: 31608
+    name: exposed-port-31608
+  - port: 31609
+    nodePort: 31609
+    name: exposed-port-31609
+  - port: 31610
+    nodePort: 31610
+    name: exposed-port-31610
   selector:
-    app: stf
+      app: stf
   type: LoadBalancer
