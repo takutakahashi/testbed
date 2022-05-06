@@ -15,7 +15,7 @@ spec:
         app: stf
     spec:
       containers:
-      - image: devicefarmer/stf
+      - image: devicefarmer/stf:3.6.1
         imagePullPolicy: Always
         name: app
         command:
