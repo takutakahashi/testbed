@@ -8,6 +8,8 @@ releases:
     set:
       - name: clusterName
         value: teleport.takutakahashi.dev
+      - name: authenticationType
+        value: github
   - name: teleport-kube-agent
     chart: teleport/teleport-kube-agent
     namespace: teleport

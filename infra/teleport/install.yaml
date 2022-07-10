@@ -61,7 +61,7 @@ data:
       enabled: true
       cluster_name: teleport.takutakahashi.dev
       authentication:
-        type: local
+        type: github
         second_factor: otp
     kubernetes_service:
       enabled: true
@@ -212,7 +212,7 @@ spec:
     metadata:
       annotations:
         # ConfigMap checksum, to recreate the pod on config changes.
-        checksum/config: 7904735a136b9ede8ef61c1c467000ed1ae0a69dce26234d7367dd7143d733d7
+        checksum/config: 52ea675135ff88201ff7476d42345ec278d2b5c31e4cf9b038cc4da2c9c527ec
       labels:
         app: teleport-cluster
     spec:
