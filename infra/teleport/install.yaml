@@ -72,6 +72,9 @@ data:
       kube_listen_addr: 0.0.0.0:3026
       mysql_listen_addr: 0.0.0.0:3036
       enabled: true
+      https_keypairs:
+      - key_file: /etc/teleport-tls/tls.key
+        cert_file: /etc/teleport-tls/tls.crt
     ssh_service:
       enabled: false
 ---
@@ -212,7 +215,7 @@ spec:
     metadata:
       annotations:
         # ConfigMap checksum, to recreate the pod on config changes.
-        checksum/config: 52ea675135ff88201ff7476d42345ec278d2b5c31e4cf9b038cc4da2c9c527ec
+        checksum/config: 55a7be31e299da6a42cdb091d92e26c5339cca9ec4d3eff02d1ac7084b786ed3
       labels:
         app: teleport-cluster
     spec:
@@ -243,6 +246,9 @@ spec:
           failureThreshold: 12 # consider agent unhealthy after 60s (12 * 5s)
           timeoutSeconds: 1
         volumeMounts:
+        - mountPath: /etc/teleport-tls
+          name: "teleport-tls"
+          readOnly: true
         - mountPath: /etc/teleport
           name: "config"
           readOnly: true
@@ -252,6 +258,9 @@ spec:
       - name: gcp-credentials
         secret:
           secretName: teleport-gcp-credentials
+      - name: teleport-tls
+        secret:
+          secretName: teleport-tls
       - name: "config"
         configMap:
           name: teleport-cluster
@@ -259,6 +268,23 @@ spec:
         persistentVolumeClaim:
           claimName: teleport-cluster
       serviceAccountName: teleport-cluster
+---
+# Source: teleport-cluster/templates/certificate.yaml
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: teleport-cluster
+  namespace: teleport
+spec:
+  secretName: teleport-tls
+  commonName: "teleport.takutakahashi.dev"
+  dnsNames:
+  - "teleport.takutakahashi.dev"
+  - "*.teleport.takutakahashi.dev"
+  issuerRef:
+    name: letsencrypt
+    kind: ClusterIssuer
+    group: cert-manager.io
 
 ---
 # Source: teleport-kube-agent/templates/psp.yaml
