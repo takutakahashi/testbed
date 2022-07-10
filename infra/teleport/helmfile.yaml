@@ -1,0 +1,19 @@
+repositories:
+  - name: teleport
+    url: https://charts.releases.teleport.dev
+releases:
+  - name: teleport-cluster
+    chart: teleport/teleport-cluster
+    namespace: teleport
+    set:
+      - name: clusterName
+        value: teleport.takutakahashi.dev
+  - name: teleport-kube-agent
+    chart: teleport/teleport-kube-agent
+    namespace: teleport
+    createNamespace: false
+    set:
+      - name: proxyAddr
+        value: teleport.takutakahashi.dev:443
+      - name: kubeClusterName
+        value: lab
