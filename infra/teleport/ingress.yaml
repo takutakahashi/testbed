@@ -1,0 +1,36 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+  name: teleport-cluster
+  namespace: teleport
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: teleport.takutakahashi.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: teleport-cluster
+            port:
+              number: 443
+        path: /
+        pathType: ImplementationSpecific
+  - host: "*.teleport.takutakahashi.dev"
+    http:
+      paths:
+      - backend:
+          service:
+            name: teleport-cluster
+            port:
+              number: 443
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - teleport.takutakahashi.dev
+    - '*.teleport.takutakahashi.dev'
+    secretName: teleport-tls
