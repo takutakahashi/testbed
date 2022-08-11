@@ -1,0 +1,8 @@
+clusterName: teleport.takutakahashi.dev
+authenticationType: github
+highAvailability:
+  certManager:
+    enabled: true
+    addCommonName: true
+    issuerName: letsencrypt
+    issuerKind: ClusterIssuer

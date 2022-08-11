@@ -5,15 +5,14 @@ releases:
   - name: teleport-cluster
     chart: teleport/teleport-cluster
     namespace: teleport
-    set:
-      - name: clusterName
-        value: teleport.takutakahashi.dev
-      - name: authenticationType
-        value: github
+    values:
+      - values.yaml
   - name: teleport-kube-agent
     chart: teleport/teleport-kube-agent
     namespace: teleport
     createNamespace: false
+    values:
+      - values.yaml
     set:
       - name: proxyAddr
         value: teleport.takutakahashi.dev:443

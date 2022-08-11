@@ -221,7 +221,7 @@ spec:
     spec:
       containers:
       - name: "teleport"
-        image: "quay.io/gravitational/teleport:10.0.0"
+        image: 'quay.io/gravitational/teleport:10.1.2'
         imagePullPolicy: IfNotPresent
         args:
         - "--diag-addr=0.0.0.0:3000"
@@ -254,6 +254,7 @@ spec:
           readOnly: true
         - mountPath: /var/lib/teleport
           name: "data"
+
       volumes:
       - name: gcp-credentials
         secret:
@@ -461,7 +462,7 @@ spec:
     spec:
       containers:
       - name: "teleport"
-        image: "quay.io/gravitational/teleport:10.0.0"
+        image: "quay.io/gravitational/teleport:10.1.2"
         imagePullPolicy: IfNotPresent
         args:
         - "--diag-addr=0.0.0.0:3000"
