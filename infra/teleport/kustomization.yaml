@@ -1,0 +1,5 @@
+namespace: teleport
+resources:
+- install.yaml
+- ingress.yaml
+- rbac.yaml
