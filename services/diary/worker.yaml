@@ -30,7 +30,7 @@ spec:
             - name: BLOG_GA
               value: "G-P6ESSZ61CV"
             - name: BLOG_THEME_URL
-              value: "https://github.com/Mitrichius/hugo-theme-anubis.git"
+              value: "https://github.com/takutakahashi/hugo-theme-anubis.git"
             - name: ONCE
               value: "--once"
             image: ghcr.io/takutakahashi/blog.tpl:v1.3.0
