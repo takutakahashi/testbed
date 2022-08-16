@@ -16,17 +16,10 @@ spec:
       labels:
         app: rethinkdb
     spec:
-      volumes:
-      - name: data
-        persistentVolumeClaim:
-          claimName: rethinkdb
       containers:
       - image: rethinkdb:2.3
         imagePullPolicy: Always
         name: db
-        volumeMounts:
-        - name: data
-          mountPath: /data
         command:
         - rethinkdb
         - --bind
