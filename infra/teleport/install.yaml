@@ -61,8 +61,9 @@ data:
       enabled: true
       cluster_name: teleport.takutakahashi.dev
       authentication:
-        type: github
-        second_factor: otp
+        type: "github"
+        local_auth: true
+        second_factor: "otp"
     kubernetes_service:
       enabled: true
       listen_addr: 0.0.0.0:3027
@@ -215,13 +216,13 @@ spec:
     metadata:
       annotations:
         # ConfigMap checksum, to recreate the pod on config changes.
-        checksum/config: 55a7be31e299da6a42cdb091d92e26c5339cca9ec4d3eff02d1ac7084b786ed3
+        checksum/config: 790fbcc28875c8cfaac586f90f2a1792e950a6474b6e3f78a78c70bce36449e1
       labels:
         app: teleport-cluster
     spec:
       containers:
       - name: "teleport"
-        image: 'quay.io/gravitational/teleport:10.1.2'
+        image: 'quay.io/gravitational/teleport:10.1.9'
         imagePullPolicy: IfNotPresent
         args:
         - "--diag-addr=0.0.0.0:3000"
@@ -286,237 +287,4 @@ spec:
     name: letsencrypt
     kind: ClusterIssuer
     group: cert-manager.io
-
----
-# Source: teleport-kube-agent/templates/psp.yaml
-apiVersion: policy/v1beta1
-kind: PodSecurityPolicy
-metadata:
-  name: teleport-kube-agent
-  annotations:
-    seccomp.security.alpha.kubernetes.io/allowedProfileNames: 'docker/default,runtime/default'
-    seccomp.security.alpha.kubernetes.io/defaultProfileName: 'runtime/default'
-spec:
-  privileged: false
-  allowPrivilegeEscalation: false
-  requiredDropCapabilities:
-  - ALL
-  seLinux:
-    rule: RunAsAny
-  supplementalGroups:
-    rule: MustRunAs
-    ranges:
-    # Forbid adding the root group.
-    - min: 1
-      max: 65535
-  runAsUser:
-    rule: MustRunAsNonRoot
-  fsGroup:
-    rule: MustRunAs
-    ranges:
-    # Forbid adding the root group.
-    - min: 1
-      max: 65535
-  readOnlyRootFilesystem: true
-  volumes:
-  - '*'
-  hostNetwork: false
-  hostIPC: false
-  hostPID: false
----
-# Source: teleport-kube-agent/templates/serviceaccount.yaml
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: teleport-kube-agent
-  namespace: teleport
----
-# Source: teleport-kube-agent/templates/config.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: teleport-kube-agent
-  namespace: teleport
-data:
-  teleport.yaml: |
-    teleport:
-      auth_token: "/etc/teleport-secrets/auth-token"
-      auth_servers: ["teleport.takutakahashi.dev:443"]
-      log:
-        severity: INFO
-        output: stderr
-        format:
-          output: text
-          extra_fields: ["timestamp","level","component","caller"]
-
-    kubernetes_service:
-      enabled: true
-      kube_cluster_name: lab
-
-    app_service:
-      enabled: false
-
-    db_service:
-      enabled: false
-
-    auth_service:
-      enabled: false
-    ssh_service:
-      enabled: false
-    proxy_service:
-      enabled: false
----
-# Source: teleport-kube-agent/templates/clusterrole.yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRole
-metadata:
-  name: teleport-kube-agent
-rules:
-- apiGroups:
-  - ""
-  resources:
-  - users
-  - groups
-  - serviceaccounts
-  verbs:
-  - impersonate
-- apiGroups:
-  - ""
-  resources:
-  - pods
-  verbs:
-  - get
-- apiGroups:
-  - "authorization.k8s.io"
-  resources:
-  - selfsubjectaccessreviews
-  verbs:
-  - create
----
-# Source: teleport-kube-agent/templates/clusterrolebinding.yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
-metadata:
-  name: teleport-kube-agent
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
-  name: teleport-kube-agent
-subjects:
-- kind: ServiceAccount
-  name: teleport-kube-agent
-  namespace: teleport
----
-# Source: teleport-kube-agent/templates/psp.yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: Role
-metadata:
-  name: teleport-kube-agent-psp
-rules:
-- apiGroups:
-  - policy
-  resources:
-  - podsecuritypolicies
-  verbs:
-  - use
-  resourceNames:
-  - teleport-kube-agent
----
-# Source: teleport-kube-agent/templates/psp.yaml
-apiVersion: rbac.authorization.k8s.io/v1
-kind: RoleBinding
-metadata:
-  name: teleport-kube-agent-psp
-roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: Role
-  name: teleport-kube-agent-psp
-subjects:
-- kind: ServiceAccount
-  name: teleport-kube-agent
----
-# Source: teleport-kube-agent/templates/deployment.yaml
-#
-# Warning to maintainers, any changes to this file that are not specific to the Deployment need to also be duplicated
-# in the statefulset.yaml file.
-#
-apiVersion: apps/v1
-kind: Deployment
-metadata:
-  name: teleport-kube-agent
-  namespace: teleport
-  labels:
-    app: teleport-kube-agent
-spec:
-  replicas: 1
-  selector:
-    matchLabels:
-      app: teleport-kube-agent
-  template:
-    metadata:
-      annotations:
-        # ConfigMap checksum, to recreate the pod on config changes.
-        checksum/config: 8729f982794dc9fffb76b0bf6731ffff7f5a39bc9f761bea89a0bfd4036ae1da
-      labels:
-        app: teleport-kube-agent
-    spec:
-      containers:
-      - name: "teleport"
-        image: "quay.io/gravitational/teleport:10.1.2"
-        imagePullPolicy: IfNotPresent
-        args:
-        - "--diag-addr=0.0.0.0:3000"
-        securityContext:
-          allowPrivilegeEscalation: false
-          capabilities:
-            drop:
-            - all
-          readOnlyRootFilesystem: true
-          runAsNonRoot: true
-          runAsUser: 9807
-        ports:
-        - name: diag
-          containerPort: 3000
-          protocol: TCP
-        livenessProbe:
-          httpGet:
-            path: /healthz
-            port: diag
-          initialDelaySeconds: 5 # wait 5s for agent to start
-          periodSeconds: 5 # poll health every 5s
-          failureThreshold: 6 # consider agent unhealthy after 30s (6 * 5s)
-          timeoutSeconds: 1
-        readinessProbe:
-          httpGet:
-            path: /readyz
-            port: diag
-          initialDelaySeconds: 5 # wait 5s for agent to register
-          periodSeconds: 5 # poll health every 5s
-          failureThreshold: 12 # consider agent unhealthy after 60s (12 * 5s)
-          timeoutSeconds: 1
-        volumeMounts:
-        - mountPath: /etc/teleport
-          name: "config"
-          readOnly: true
-        - mountPath: /etc/teleport-secrets
-          name: "auth-token"
-          readOnly: true
-        - mountPath: /var/lib/teleport
-          name: data
-      volumes:
-      - name: "config"
-        configMap:
-          name: teleport-kube-agent
-      - name: "auth-token"
-        secret:
-          secretName: teleport-kube-agent-join-token
-      - name: "data"
-        emptyDir: {}
-      serviceAccountName: teleport-kube-agent
----
-# Source: teleport-kube-agent/templates/statefulset.yaml
-#
-# Warning to maintainers, any changes to this file that are not specific to the StatefulSet need to also be duplicated
-# in the deployment.yaml file.
-#
 
