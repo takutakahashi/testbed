@@ -1,0 +1,10 @@
+repositories:
+  - name: external-secrets
+    url: https://charts.external-secrets.io
+releases:
+  - name: external-secrets
+    chart: external-secrets/external-secrets
+    namespace: external-secrets
+    set:
+      - name: installCRDs
+        value: "true"
