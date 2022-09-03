@@ -3,5 +3,6 @@ resources:
   - ingress-nginx
   - bastion
   - external-dns
+  - external-secrets
   - zfs-localpv
   - teleport
