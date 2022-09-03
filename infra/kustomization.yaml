@@ -4,3 +4,4 @@ resources:
   - bastion
   - external-dns
   - zfs-localpv
+  - teleport

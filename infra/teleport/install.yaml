@@ -62,7 +62,7 @@ data:
       cluster_name: teleport.takutakahashi.dev
       authentication:
         type: "github"
-        local_auth: true
+        local_auth: false
         second_factor: "otp"
     kubernetes_service:
       enabled: true
