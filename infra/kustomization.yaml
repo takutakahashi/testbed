@@ -4,5 +4,6 @@ resources:
   - bastion
   - external-dns
   - external-secrets
+  - secrets
   - zfs-localpv
   - teleport
