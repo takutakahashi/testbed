@@ -5334,7 +5334,6 @@ metadata:
   labels:
     helm.sh/chart: external-secrets-0.5.9
     app.kubernetes.io/name: external-secrets-cert-controller
-    app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/version: "v0.5.9"
     app.kubernetes.io/managed-by: Helm
 rules:
@@ -5392,7 +5391,6 @@ metadata:
   labels:
     helm.sh/chart: external-secrets-0.5.9
     app.kubernetes.io/name: external-secrets
-    app.kubernetes.io/instance: external-secrets
     app.kubernetes.io/version: "v0.5.9"
     app.kubernetes.io/managed-by: Helm
 rules:

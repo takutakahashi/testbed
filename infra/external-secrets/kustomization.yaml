@@ -1,3 +1,5 @@
+commonLabels:
+  app.kubernetes.io/instance: infra
 resources:
   - install.yaml
   - clustersecretstore.yaml
