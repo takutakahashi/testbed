@@ -7,3 +7,4 @@ resources:
   - secrets
   - zfs-localpv
   - teleport
+  - metallb
