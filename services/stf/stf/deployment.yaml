@@ -24,7 +24,7 @@ spec:
         - --adb-host
         - adb
         - --public-ip
-        - 10.30.0.11
+        - 10.10.0.165
         - --provider-min-port
         - "31600"
         - --provider-max-port
