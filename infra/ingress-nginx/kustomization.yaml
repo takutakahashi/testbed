@@ -1,5 +1,5 @@
 namespace: ingress
 resources:
-  - https://raw.githubusercontent.com/kubernetes/ingress-nginx/controller-v1.1.2/deploy/static/provider/cloud/deploy.yaml
+  - install.yaml
 patches:
   - default-class.yaml
