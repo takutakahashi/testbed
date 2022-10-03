@@ -46,12 +46,12 @@ spec:
   storage:
     storageClassDeviceSets:
     - name: set2
-      count: 7
+      count: 10
       portable: false
       tuneDeviceClass: true
       placement:
         topologySpreadConstraints:
-        - maxSkew: 1 
+        - maxSkew: 3
           topologyKey: kubernetes.io/hostname
           whenUnsatisfiable: DoNotSchedule
           labelSelector:
