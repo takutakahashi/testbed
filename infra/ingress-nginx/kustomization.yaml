@@ -1,7 +1,7 @@
 namespace: ingress
 resources:
   - install.yaml
+  - servicemonitor.yaml
 patches:
   - default-class.yaml
   - service-patch.yaml
-  - servicemonitor.yaml
