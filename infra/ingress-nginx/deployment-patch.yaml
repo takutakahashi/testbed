@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ingress-nginx-controller
+  namespace: ingress
+spec:
+  template:
+    labels:
+      prometheus.io/scrape: "true"
+      prometheus.io/port: "10254"
+    spec:
+      containers:
+        - name: controller
+          ports:
+            - name: metrics
+              containerPort: 10254
+              protocol: TCP

@@ -5,10 +5,13 @@ metadata:
   namespace: ingress
 spec:
   endpoints:
-  - interval: 30s
+  - interval: 10s
     port: metrics
+    path: /metrics
+  namespaceSelector:
+    matchNames:
+    - ingress
   selector:
     matchLabels:
       app.kubernetes.io/name: ingress-nginx
-      app.kubernetes.io/instance: ingress-nginx
       app.kubernetes.io/component: controller
