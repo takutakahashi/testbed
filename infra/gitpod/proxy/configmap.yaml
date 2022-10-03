@@ -1,0 +1,24 @@
+apiVersion: v1
+data:
+  haproxy.cfg: |2+
+    frontend frontend-port-80
+      default_backend backend-port-80
+      bind *:80
+    backend backend-port-80
+      server server-80 gitpod.takutakahashi.dev:80
+
+    frontend frontend-port-443
+      default_backend backend-port-443
+      bind *:443
+    backend backend-port-443
+      server server-443 gitpod.takutakahashi.dev:443
+
+    frontend frontend-port-9500
+      default_backend backend-port-9500
+      bind *:9500
+    backend backend-port-9500
+      server server-9500 gitpod.takutakahashi.dev:9500
+kind: ConfigMap
+metadata:
+  name: gitpod-proxy-config
+  namespace: default

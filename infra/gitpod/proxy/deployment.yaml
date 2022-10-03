@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: gitpod
+    role: proxy
+  name: gitpod-proxy
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gitpod
+      role: proxy
+  template:
+    metadata:
+      labels:
+        app: gitpod
+        role: proxy
+    spec:
+      containers:
+      - image: haproxy:2.3
+        imagePullPolicy: IfNotPresent
+        name: proxy
+        volumeMounts:
+        - mountPath: /usr/local/etc/haproxy
+          name: config
+          readOnly: true
+      volumes:
+      - configMap:
+          defaultMode: 420
+          name: gitpod-proxy-config
+        name: config
