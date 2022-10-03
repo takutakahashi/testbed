@@ -3,3 +3,5 @@ resources:
   - install.yaml
 patches:
   - default-class.yaml
+  - service-patch.yaml
+  - servicemonitor.yaml
