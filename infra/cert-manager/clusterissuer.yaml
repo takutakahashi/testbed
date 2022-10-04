@@ -12,7 +12,7 @@ spec:
     solvers:
     - dns01:
         route53:
-          accessKeyID: AKIASY6UDK32YLA6WPEM
+          accessKeyID: AKIASY6UDK327CTYLDQG
           hostedZoneID: Z0971128BW4DIZDJ3HL3
           region: us-east-1
           secretAccessKeySecretRef:
@@ -23,7 +23,7 @@ spec:
         - lab.takutakahashi.dev
     - dns01:
         route53:
-          accessKeyID: AKIASY6UDK32YLA6WPEM
+          accessKeyID: AKIASY6UDK327CTYLDQG
           hostedZoneID: Z08206143OKX3EUW2ALA7
           region: us-east-1
           secretAccessKeySecretRef:
@@ -35,7 +35,7 @@ spec:
         - gp.takutakahashi.dev
     - dns01:
         route53:
-          accessKeyID: AKIASY6UDK32YLA6WPEM
+          accessKeyID: AKIASY6UDK327CTYLDQG
           hostedZoneID: Z047463314B42TUZOWL3L
           region: us-east-1
           secretAccessKeySecretRef:
