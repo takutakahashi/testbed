@@ -1,4 +1,8 @@
 prometheus:
+  ingress:
+    enabled: true
+    hosts:
+      - prom.in.takutakahashi.dev
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false
