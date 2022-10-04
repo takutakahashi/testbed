@@ -40458,6 +40458,10 @@ spec:
                 name: prometheus-stack-kube-prom-prometheus
                 port:
                   number: 9090
+  tls:
+    - hosts:
+      - prom.in.takutakahashi.dev
+      secretName: prometheus-stack-kube-prom-prometheus-tls-secret
 ---
 # Source: kube-prometheus-stack/templates/alertmanager/alertmanager.yaml
 apiVersion: monitoring.coreos.com/v1

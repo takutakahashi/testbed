@@ -5,6 +5,10 @@ prometheus:
       cert-manager.io/cluster-issuer: letsencrypt
     hosts:
       - prom.in.takutakahashi.dev
+    tls:
+      - secretName: prometheus-stack-kube-prom-prometheus-tls-secret
+        hosts:
+          - prom.in.takutakahashi.dev
   prometheusSpec:
     serviceMonitorSelectorNilUsesHelmValues: false
     podMonitorSelectorNilUsesHelmValues: false
