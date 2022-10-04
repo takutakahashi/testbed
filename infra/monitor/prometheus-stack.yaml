@@ -1,6 +1,8 @@
 prometheus:
   ingress:
     enabled: true
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
     hosts:
       - prom.in.takutakahashi.dev
   prometheusSpec:

@@ -40432,6 +40432,8 @@ spec:
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
   name: prometheus-stack-kube-prom-prometheus
   namespace: monitor
   labels:
