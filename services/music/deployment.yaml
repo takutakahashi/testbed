@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: navidrome
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: navidrome
+  template:
+    metadata:
+      labels:
+        app: navidrome
+    spec:
+      containers:
+        - name: navidrome
+          image: deluan/navidrome:latest
+          securityContext:
+            privileged: true
+          env:
+          - name: TZ
+            value: Asia/Tokyo
+          - name: PUID
+            value: "1000"
+          - name: PGID
+            value: "1000"
+          ports:
+            - containerPort: 4533
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "2"
+              memory: "2Gi"
+          volumeMounts:
+          - name: config
+            mountPath: /data
+      volumes:
+        - name: config
+          persistentVolumeClaim:
+            claimName: airsonic-config

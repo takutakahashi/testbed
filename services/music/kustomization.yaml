@@ -1,0 +1,7 @@
+namespace: music
+resources:
+  - namespace.yaml
+  - deployment.yaml
+  - pvc.yaml
+  - service.yaml
+    #  - ingress.yaml
