@@ -1,12 +1,12 @@
 resources:
   - https://raw.githubusercontent.com/rook/rook/v1.9.13/deploy/examples/crds.yaml
-  - ./cluster.yaml
+  - https://raw.githubusercontent.com/rook/rook/v1.9.13/deploy/examples/common.yaml
   - https://raw.githubusercontent.com/rook/rook/v1.9.13/deploy/examples/operator.yaml
-  - ./snapshotclass.yaml
+  - ./cluster.yaml
+  - ./pool.yaml
   - ./ephemeral-fs.yaml
   - ./storageclass.yaml
-  - https://raw.githubusercontent.com/rook/rook/v1.9.13/deploy/examples/common.yaml
-  - ./pool.yaml
+  - ./snapshotclass.yaml
 images:
 - name: "rook/ceph"
   newTag: "v1.9.13"
