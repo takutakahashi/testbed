@@ -46,7 +46,7 @@ spec:
   storage:
     storageClassDeviceSets:
     - name: set2
-      count: 10
+      count: 12
       portable: false
       tuneDeviceClass: true
       placement:
