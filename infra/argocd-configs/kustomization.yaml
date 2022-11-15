@@ -3,3 +3,4 @@ resources:
   - cert-manager.yaml
   - external-dns.yaml
   - sealed-secrets.yaml
+  - external-secrets.yaml
