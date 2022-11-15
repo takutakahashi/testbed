@@ -2,3 +2,4 @@ resources:
   - monitor.yaml
   - cert-manager.yaml
   - external-dns.yaml
+  - sealed-secrets.yaml
