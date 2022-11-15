@@ -2,7 +2,6 @@ resources:
   - argocd-configs
   - ingress-nginx
   - bastion
-  - external-dns
   - external-secrets
   - secrets
   - zfs-localpv
