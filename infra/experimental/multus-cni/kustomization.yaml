@@ -1,0 +1,2 @@
+resources:
+  - https://raw.githubusercontent.com/k8snetworkplumbingwg/multus-cni/v3.8/images/multus-daemonset.yml
