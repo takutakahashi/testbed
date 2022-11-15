@@ -1,0 +1,41 @@
+---
+name: takutaka testbed
+docPath: docs/arch
+nodes:
+  -
+   name: k3s-cluster
+   components:
+     - kubeapi-proxy
+     - teleport
+     - gitpod
+     - rook
+  -
+   name: db
+   components:
+     - mySQL
+  -
+   name: vyOS
+   components:
+     - bgpd
+  -
+   name: lb
+   components:
+     - metallb
+
+networks:
+  -
+   route:
+     - internet
+     - "vyOS:bgpd"
+  -
+   route:
+     - "vyOS:bgpd"
+     - "lb:metallb"
+  -
+   route:
+     - "lb:metallb"
+     - "k3s-cluster:kubeapi-proxy"
+  -
+   route:
+     - "lb:metallb"
+     - "k3s-cluster:teleport"
