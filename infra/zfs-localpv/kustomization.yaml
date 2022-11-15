@@ -1,2 +1,4 @@
 resources:
   - https://openebs.github.io/charts/zfs-operator.yaml
+patches:
+  - affinity.yaml

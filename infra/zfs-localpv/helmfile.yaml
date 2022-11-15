@@ -1,0 +1,7 @@
+repositories:
+- name: openebs-zfslocalpv
+  url: https://openebs.github.io/zfs-localpv
+releases:
+  - name: zfs-localpv
+    namespace: openebs
+    chart: openebs-zfslocalpv/zfs-localpv
