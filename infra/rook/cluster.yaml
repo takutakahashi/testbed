@@ -45,35 +45,8 @@ spec:
     rulesNamespace: rook-ceph
   storage:
     storageClassDeviceSets:
-    - name: set2
-      count: 15
-      portable: false
-      tuneDeviceClass: true
-      placement:
-        topologySpreadConstraints:
-        - maxSkew: 3
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchExpressions:
-            - key: app
-              operator: In
-              values:
-              - rook-ceph-osd
-              - rook-ceph-osd-prepare
-      volumeClaimTemplates:
-      - metadata:
-          name: data
-        spec:
-          resources:
-            requests:
-              storage: 100Gi
-          storageClassName: ceph-backend
-          volumeMode: Block
-          accessModes:
-            - ReadWriteOnce
     - name: set3
-      count: 4
+      count: 5
       portable: false
       tuneDeviceClass: true
       placement:
@@ -102,7 +75,7 @@ spec:
         spec:
           resources:
             requests:
-              storage: 100Gi
+              storage: 400Gi
           storageClassName: ceph-backend
           volumeMode: Block
           accessModes:
