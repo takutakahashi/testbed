@@ -1,0 +1,33 @@
+apiVersion: external-secrets.io/v1beta1
+kind: ExternalSecret
+metadata:
+  name: ssh-host-key
+  namespace: default
+spec:
+  data:
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: workspace/ssh-host-key
+      property: ssh_host_ecdsa_key
+    secretKey: ssh_host_ecdsa_key
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: workspace/ssh-host-key
+      property: ssh_host_ed25519_key
+    secretKey: ssh_host_ed25519_key
+  - remoteRef:
+      conversionStrategy: Default
+      decodingStrategy: None
+      key: workspace/ssh-host-key
+      property: ssh_host_rsa_key
+    secretKey: ssh_host_rsa_key
+  refreshInterval: 24h
+  secretStoreRef:
+    kind: ClusterSecretStore
+    name: aws-ssm
+  target:
+    creationPolicy: Owner
+    deletionPolicy: Retain
+    name: ssh-host-key

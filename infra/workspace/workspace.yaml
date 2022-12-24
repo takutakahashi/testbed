@@ -1,0 +1,91 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  labels:
+    app: workspace
+  name: workspace
+  namespace: default
+spec:
+  podManagementPolicy: OrderedReady
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: workspace
+  serviceName: workspace
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: workspace
+    spec:
+      containers:
+      - command:
+        - /home/owner/.dev/bin/entrypoint-sshd
+        env:
+        - name: AUTHORIZED_KEYS_URL
+          value: https://github.com/takutakahashi.keys
+        image: ghcr.io/takutakahashi/workspace:b48e20f6f36859393671ecb57d728a93d803f66d
+        imagePullPolicy: IfNotPresent
+        name: workspace
+        volumeMounts:
+        - mountPath: /home/owner
+          name: home
+        - mountPath: /etc/ssh
+          name: ssh-key-dir
+      initContainers:
+      - command:
+        - rsync
+        - -av
+        - /home/owner/
+        - /tmp/owner
+        image: ghcr.io/takutakahashi/workspace:b48e20f6f36859393671ecb57d728a93d803f66d
+        imagePullPolicy: IfNotPresent
+        name: cp
+        volumeMounts:
+        - mountPath: /tmp/owner
+          name: home
+      - command:
+        - bash
+        - /tmp/setup/setup-ssh.sh
+        image: ubuntu
+        imagePullPolicy: IfNotPresent
+        name: setup-ssh
+        volumeMounts:
+        - mountPath: /tmp/setup
+          name: setup-ssh
+        - mountPath: /mnt/ssh
+          name: ssh-host-key
+        - mountPath: /etc/ssh
+          name: ssh-key-dir
+      nodeSelector:
+        workspace: "true"
+      restartPolicy: Always
+      volumes:
+      - name: setup-ssh
+        configMap:
+          name: setup-ssh
+      - name: ssh-key-dir
+        emptyDir: {}
+      - name: ssh-host-key
+        secret:
+          secretName: ssh-host-key
+  updateStrategy:
+    rollingUpdate:
+      partition: 0
+    type: RollingUpdate
+  volumeClaimTemplates:
+  - apiVersion: v1
+    kind: PersistentVolumeClaim
+    metadata:
+      creationTimestamp: null
+      name: home
+    spec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 100Gi
+      volumeMode: Filesystem
+    status:
+      phase: Pending

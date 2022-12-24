@@ -1,0 +1,7 @@
+resources:
+  - ssh-host-key.yaml
+  - workspace.yaml
+configMapGenerator:
+- name: setup-ssh
+  files:
+  - setup-ssh.sh
