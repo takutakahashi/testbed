@@ -46,7 +46,7 @@ spec:
   storage:
     storageClassDeviceSets:
     - name: set3
-      count: 5
+      count: 3
       portable: false
       tuneDeviceClass: true
       placement:
@@ -75,11 +75,46 @@ spec:
         spec:
           resources:
             requests:
-              storage: 400Gi
+              storage: 300Gi
           storageClassName: ceph-backend
           volumeMode: Block
           accessModes:
             - ReadWriteOnce
+              #    - name: set-raw
+              #      count: 1
+              #      portable: false
+              #      tuneDeviceClass: true
+              #      placement:
+              #        nodeAffinity:
+              #          requiredDuringSchedulingIgnoredDuringExecution:
+              #            nodeSelectorTerms:
+              #            - matchExpressions:
+              #              - key: openebs.io/devname
+              #                operator: In
+              #                values:
+              #                - ceph-backend
+              #        topologySpreadConstraints:
+              #        - maxSkew: 2
+              #          topologyKey: kubernetes.io/hostname
+              #          whenUnsatisfiable: DoNotSchedule
+              #          labelSelector:
+              #            matchExpressions:
+              #            - key: app
+              #              operator: In
+              #              values:
+              #              - rook-ceph-osd
+              #              - rook-ceph-osd-prepare
+              #      volumeClaimTemplates:
+              #      - metadata:
+              #          name: data
+              #        spec:
+              #          resources:
+              #            requests:
+              #              storage: 300Gi
+              #          storageClassName: ceph-backend-raw
+              #          volumeMode: Block
+              #          accessModes:
+              #            - ReadWriteOnce
   disruptionManagement:
     managePodBudgets: false
     osdMaintenanceTimeout: 30
