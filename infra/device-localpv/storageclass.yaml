@@ -1,0 +1,13 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+ name: ceph-backend-device
+allowVolumeExpansion: true
+parameters:
+ devname: "ceph-backend"
+provisioner: device.csi.openebs.io
+allowedTopologies:
+- matchLabelExpressions:
+  - key: openebs.io/devname
+    values:
+    - ceph-backend
