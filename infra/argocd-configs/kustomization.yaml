@@ -1,6 +1,8 @@
 resources:
   - monitor.yaml
+  - device-localpv.yaml
   - cert-manager.yaml
   - external-dns.yaml
   - sealed-secrets.yaml
   - external-secrets.yaml
+  - grafana.yaml
