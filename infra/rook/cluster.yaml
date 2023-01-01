@@ -15,6 +15,13 @@ metadata:
   name: rook-ceph
   namespace: rook-ceph
 spec:
+  placement:
+    all:
+      tolerations:
+      - key: node-role/storage
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
   dataDirHostPath: /var/lib/rook
   removeOSDsIfOutAndSafeToRemove: true
   mon:

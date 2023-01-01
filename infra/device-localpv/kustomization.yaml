@@ -1,2 +1,3 @@
 resources:
   - https://raw.githubusercontent.com/openebs/device-localpv/develop/deploy/device-operator.yaml
+  - storageclass.yaml
