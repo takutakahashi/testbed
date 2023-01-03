@@ -1,5 +1,5 @@
 resources:
-  - https://raw.githubusercontent.com/metallb/metallb/v0.13.5/config/manifests/metallb-native.yaml
+  - metallb-native.yaml
   - pool.yaml
   - l2.yaml
   - bgp.yaml
