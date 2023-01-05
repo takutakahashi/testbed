@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: speaker
+  namespace: metallb-system
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+        node-role.kubernetes.io/control-plane: "true"
+      tolerations:
+      - effect: NoExecute
+        key: k3s-controlplane
+        operator: Equal
+        value: "true"
+
