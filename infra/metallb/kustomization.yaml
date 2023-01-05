@@ -5,3 +5,4 @@ resources:
   - bgp.yaml
 patches:
   - daemonset.patch.yaml
+  - deployment.patch.yaml
