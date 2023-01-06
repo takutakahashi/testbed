@@ -5,5 +5,4 @@ resources:
   - external-dns.yaml
   - sealed-secrets.yaml
   - external-secrets.yaml
-  - grafana.yaml
   - dynamic-localpv-provisioner.yaml
