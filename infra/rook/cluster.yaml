@@ -53,7 +53,7 @@ spec:
   storage:
     storageClassDeviceSets:
     - name: set3
-      count: 3
+      count: 2
       portable: false
       tuneDeviceClass: true
       placement:
@@ -88,7 +88,7 @@ spec:
           accessModes:
             - ReadWriteOnce
     - name: set-raw
-      count: 1
+      count: 2
       portable: false
       tuneDeviceClass: true
       placement:
