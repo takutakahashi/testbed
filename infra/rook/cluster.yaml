@@ -53,7 +53,7 @@ spec:
   storage:
     storageClassDeviceSets:
     - name: set3
-      count: 2
+      count: 1
       portable: false
       tuneDeviceClass: true
       placement:
@@ -117,7 +117,7 @@ spec:
         spec:
           resources:
             requests:
-              storage: 300Gi
+              storage: 400Gi
           storageClassName: ceph-backend-device
           volumeMode: Block
           accessModes:
