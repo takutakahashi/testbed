@@ -15,6 +15,9 @@ spec:
       containers:
         - name: navidrome
           image: deluan/navidrome:latest
+          command:
+            - sh
+            - /entrypoint/exec.sh
           securityContext:
             privileged: true
           env:
@@ -34,7 +37,12 @@ spec:
           volumeMounts:
           - name: config
             mountPath: /data
+          - name: entrypoint
+            mountPath: /entrypoint
       volumes:
+        - name: entrypoint
+          configMap:
+            name: entrypoint
         - name: config
           persistentVolumeClaim:
             claimName: airsonic-config
