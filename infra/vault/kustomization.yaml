@@ -1,0 +1,5 @@
+namespace: vault-operator
+resources:
+  - install.yaml
+  - https://raw.githubusercontent.com/banzaicloud/bank-vaults/master/operator/deploy/rbac.yaml
+  - https://raw.githubusercontent.com/banzaicloud/bank-vaults/master/operator/deploy/cr.yaml
