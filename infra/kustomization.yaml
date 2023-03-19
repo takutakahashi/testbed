@@ -2,8 +2,6 @@ resources:
   - argocd-configs
   - ingress-nginx
   - bastion
-  - external-secrets
   - secrets
   - zfs-localpv
   - teleport
-  - metallb

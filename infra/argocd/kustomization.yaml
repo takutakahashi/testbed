@@ -2,3 +2,4 @@ namespace: argocd
 resources:
   - 00-namespace.yaml
   - install.yaml
+  - https://raw.githubusercontent.com/argoproj-labs/argocd-image-updater/stable/manifests/install.yaml

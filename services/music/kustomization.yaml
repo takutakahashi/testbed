@@ -5,3 +5,7 @@ resources:
   - pvc.yaml
   - service.yaml
     #  - ingress.yaml
+configMapGenerator:
+  - name: entrypoint
+    files:
+      - ./exec.sh

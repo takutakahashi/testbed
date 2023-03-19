@@ -15,6 +15,13 @@ metadata:
   name: rook-ceph
   namespace: rook-ceph
 spec:
+  placement:
+    all:
+      tolerations:
+      - key: node-role/storage
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
   dataDirHostPath: /var/lib/rook
   removeOSDsIfOutAndSafeToRemove: true
   mon:
@@ -22,7 +29,7 @@ spec:
     allowMultiplePerNode: false
     volumeClaimTemplate:
       spec:
-        storageClassName: ceph-backend
+        storageClassName: openebs-hostpath
         resources:
           requests:
             storage: 10Gi
@@ -46,7 +53,7 @@ spec:
   storage:
     storageClassDeviceSets:
     - name: set3
-      count: 3
+      count: 1
       portable: false
       tuneDeviceClass: true
       placement:
@@ -80,41 +87,41 @@ spec:
           volumeMode: Block
           accessModes:
             - ReadWriteOnce
-              #    - name: set-raw
-              #      count: 1
-              #      portable: false
-              #      tuneDeviceClass: true
-              #      placement:
-              #        nodeAffinity:
-              #          requiredDuringSchedulingIgnoredDuringExecution:
-              #            nodeSelectorTerms:
-              #            - matchExpressions:
-              #              - key: openebs.io/devname
-              #                operator: In
-              #                values:
-              #                - ceph-backend
-              #        topologySpreadConstraints:
-              #        - maxSkew: 2
-              #          topologyKey: kubernetes.io/hostname
-              #          whenUnsatisfiable: DoNotSchedule
-              #          labelSelector:
-              #            matchExpressions:
-              #            - key: app
-              #              operator: In
-              #              values:
-              #              - rook-ceph-osd
-              #              - rook-ceph-osd-prepare
-              #      volumeClaimTemplates:
-              #      - metadata:
-              #          name: data
-              #        spec:
-              #          resources:
-              #            requests:
-              #              storage: 300Gi
-              #          storageClassName: ceph-backend-raw
-              #          volumeMode: Block
-              #          accessModes:
-              #            - ReadWriteOnce
+    - name: set-raw
+      count: 2
+      portable: false
+      tuneDeviceClass: true
+      placement:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: openebs.io/devname
+                operator: In
+                values:
+                - ceph-backend
+        topologySpreadConstraints:
+        - maxSkew: 2
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+          labelSelector:
+            matchExpressions:
+            - key: app
+              operator: In
+              values:
+              - rook-ceph-osd
+              - rook-ceph-osd-prepare
+      volumeClaimTemplates:
+      - metadata:
+          name: data
+        spec:
+          resources:
+            requests:
+              storage: 400Gi
+          storageClassName: ceph-backend-device
+          volumeMode: Block
+          accessModes:
+            - ReadWriteOnce
   disruptionManagement:
     managePodBudgets: false
     osdMaintenanceTimeout: 30
