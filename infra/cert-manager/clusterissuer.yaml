@@ -10,6 +10,12 @@ spec:
       name: cert-manager-le-private-key
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
+    - http01:
+        ingress:
+          class: nginx
+      selector:
+        dnsZones:
+        - epochub.com
     - dns01:
         route53:
           accessKeyID: AKIASY6UDK327CTYLDQG
