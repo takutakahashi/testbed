@@ -21,5 +21,18 @@ spec:
             - --ticker
             - ETH_JPY
             - --jpy
-            - "2000"
+            - "1000"
+
+          - name: buy-btc
+            image: takutakahashi/autobuy
+            envFrom:
+            - secretRef:
+                name: autobuy-secret
+            args:
+            - python
+            - app.py
+            - --ticker
+            - BTC_JPY
+            - --jpy
+            - "1000"
 
