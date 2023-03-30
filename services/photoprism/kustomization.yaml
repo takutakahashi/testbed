@@ -1,0 +1,6 @@
+namespace: photoprism
+resources:
+  - ../db/mariadb
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
