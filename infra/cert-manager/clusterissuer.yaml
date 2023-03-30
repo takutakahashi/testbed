@@ -50,3 +50,14 @@ spec:
       selector:
         dnsZones:
         - in.takutakahashi.dev
+    - dns01:
+        route53:
+          accessKeyID: AKIASY6UDK327CTYLDQG
+          hostedZoneID: Z04628681KGVQWJH2MYEE
+          region: us-east-1
+          secretAccessKeySecretRef:
+            key: secret-access-key
+            name: lab-takutakahashi-dev-route53-secret
+      selector:
+        dnsZones:
+        - taka-app.net
