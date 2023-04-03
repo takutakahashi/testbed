@@ -4,6 +4,7 @@ metadata:
   name: ingress-nginx-controller
   namespace: ingress
 spec:
+  replicas: 3
   template:
     metadata:
       labels:
