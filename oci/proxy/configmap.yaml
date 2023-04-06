@@ -18,6 +18,12 @@ data:
       bind *:9500
     backend backend-port-9500
       server server-9500 gitpod.takutakahashi.dev:9500
+
+    frontend frontend-port-2222
+      default_backend backend-port-2222
+      bind *:2222
+    backend backend-port-2222
+      server server-9500 directip.takutakahashi.dev:2222
 kind: ConfigMap
 metadata:
   name: gitpod-proxy-config
