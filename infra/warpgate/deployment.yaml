@@ -24,8 +24,8 @@ spec:
         persistentVolumeClaim:
           claimName: data
       - name: config
-        configMap:
-          name: config
+        secret:
+          secretName: warpgate-config
       - name: tmp
         emptyDir: {}
       initContainers:
