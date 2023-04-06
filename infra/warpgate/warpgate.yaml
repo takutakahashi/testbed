@@ -1,0 +1,15 @@
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  creationTimestamp: null
+  name: warpgate-config
+  namespace: default
+spec:
+  encryptedData:
+    warpgate.yaml: AgCRG504rnnh+Ok9gmC9oEgA1aNykUpBANNJWRoHBkKYDgaAPpxW3WkH2bL+ouSyKhz1v2SJSLfyFOFXwBreZ5cSduvpq7l+DeWyDLb9GDLJmm28C5Isv1RcjjWWulMKg1jEyyVjy1ANZjnDi+KWBzEWdIdQIPPjrc/hDVP/VH/cLCHPr3e0lqi5RBNUT9B/nk/kY8QI0BoyDokN6Qxn/55YJIPW4/pKYx2nMp5JKrIdZwHKGro+Xl7O9rsHaEUsZWzKC4NuV8shbaQU7hTGT2cJsMuj8sBtU3OdnM1e6vion1DDWL9xOkx4bsDeynEIQuUV9+u+GIcEAHNTndO3JC+o8AzgRvmKTvHkPlCz77k/aVLuz56NCwlM2DtG3QDVihkZRSSedzn0cALuBEgpWfeAuZZtiDJ0QOJf07NjdzvWn2fQBJuo0Sko2SmeRH5XiTqXbP77HXk7dEy6xE3VB6UKf8WR7qLULoAnU62jWo8YTLl7aS155haeNLsMy35o2kehyJGJ8fsMufDy6dHNTcWIKFxG/vbADfcGn7ueujJmMftTRGI0FUDYi9q/m0LLcL0OozGAfLshs3pK+ewzMAvnLx2zOqsFc528kou9ey7aqjdmpURMbDVbY88eTuZlQkcm27z60CY5cnacEWWjS9pnVlJxDlX0b6kMOIYZdpEEdwynG1JAkiyKrGNAzjiNwaM=
+  template:
+    metadata:
+      creationTimestamp: null
+      name: warpgate-config
+      namespace: default
+

@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: warpgate
+  name: warpgate
+  namespace: warpgate
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: warpgate
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: warpgate
+    spec:
+      volumes:
+      - name: data
+        persistentVolumeClaim:
+          claimName: data
+      - name: config
+        configMap:
+          name: config
+      - name: tmp
+        emptyDir: {}
+      initContainers:
+      - name: cp
+        image: ubuntu
+        command:
+          - cp
+          - /etc/warpgate/warpgate.yaml
+          - /mnt/warpgate.yaml
+        volumeMounts:
+          - name: config
+            mountPath: /etc/warpgate
+          - name: tmp
+            mountPath: /mnt
+      containers:
+      - image: ghcr.io/warp-tech/warpgate
+        name: warpgate
+        command:
+          - warpgate
+          - --config
+          - /etc/warpgate/warpgate.yaml
+          - run
+        volumeMounts:
+          - name: data
+            mountPath: /data
+          - name: tmp
+            mountPath: /etc/warpgate
+
