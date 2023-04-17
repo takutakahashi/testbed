@@ -40,7 +40,7 @@ spec:
           name: mirakurun-config
         - mountPath: /dst
           name: app-config
-      - image: mirakc/mirakc
+      - image: ghcr.io/takutakahashi/pvr-base:94c45137a17b2ffd4fae2be305c28e0b22753413
         name: cp-recpt1
         command:
           - cp
