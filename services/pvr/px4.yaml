@@ -3,31 +3,26 @@ kind: DaemonSet
 metadata:
   labels:
     app: mirakurun
-    tuner: px4
+    tuner/px4: "true"
   name: mirakurun-px4
 spec:
   selector:
     matchLabels:
       app: mirakurun
-      tuner: px4
+      tuner/px4: "true"
   template:
     metadata:
       labels:
         app: mirakurun
-        tuner: px4
+        tuner/px4: "true"
     spec:
       tolerations:
-      - key: "kubernetes.io/arch"
-        operator: "Equal"
-        value: "arm"
-        effect: "NoSchedule"
-      - effect: NoExecute
-        key: kubernetes.io/arch
+      - key: node-role/baremetal
         operator: Equal
-        value: arm
+        value: "true"
+        effect: NoSchedule
       nodeSelector:
-        app: mirakurun
-        tuner: px4
+        tuner/px4: "true"
       initContainers:
       - image: busybox
         name: cp
@@ -152,4 +147,4 @@ spec:
     protocol: TCP
   selector:
     app: mirakurun
-    tuner: px4
+    tuner/px4: "true"

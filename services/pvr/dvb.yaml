@@ -9,19 +9,20 @@ spec:
   selector:
     matchLabels:
       app: mirakurun
-      tuner: dvb
+      tuner/dvb: "true"
   template:
     metadata:
       labels:
         app: mirakurun
-        tuner: dvb
+        tuner/dvb: "true"
     spec:
       tolerations:
-        - effect: NoSchedule
-          key: node-role/baremetal
-          value: "true"
+      - key: node-role/baremetal
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
       nodeSelector:
-        tuner: dvb
+        tuner/dvb: "true"
       containers:
       - image: chinachu/mirakurun:3.9.0-rc.4
         command:
@@ -70,4 +71,4 @@ spec:
     protocol: TCP
   selector:
     app: mirakurun
-    tuner: dvb
+    tuner/dvb: "true"
