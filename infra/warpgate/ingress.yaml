@@ -1,0 +1,25 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    nginx.ingress.kubernetes.io/backend-protocol: HTTPS
+    cert-manager.io/cluster-issuer: letsencrypt
+  name: warpgate
+  namespace: warpgate
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: gate.takutakahashi.dev
+    http:
+      paths:
+      - backend:
+          service:
+            name: warpgate
+            port:
+              number: 443
+        path: /
+        pathType: ImplementationSpecific
+  tls:
+  - hosts:
+    - gate.takutakahashi.dev
+    secretName: warpgate-tls

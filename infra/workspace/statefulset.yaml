@@ -25,6 +25,10 @@ spec:
           value: https://github.com/takutakahashi.keys
         image: ghcr.io/takutakahashi/workspace:b48e20f6f36859393671ecb57d728a93d803f66d
         imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: 2
+            memory: 8Gi
         name: workspace
         volumeMounts:
         - mountPath: /home/owner

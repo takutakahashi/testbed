@@ -1,23 +1,23 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: devblog
+  name: photoprism
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt
 spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - www.takutakahashi.dev
-    secretName: devblog-tls-secret
+    - photo.in.takutakahashi.dev
+    secretName: photoprism-tls-secret
   rules:
-  - host: www.takutakahashi.dev
+  - host: photo.in.takutakahashi.dev
     http:
       paths:
       - path: /
         pathType: ImplementationSpecific
         backend:
           service:
-            name: devblog-web
+            name: photoprism
             port:
               number: 80

@@ -5,19 +5,55 @@ data:
       default_backend backend-port-80
       bind *:80
     backend backend-port-80
-      server server-80 gitpod.takutakahashi.dev:80
+      server server-80 directip.takutakahashi.dev:80
 
     frontend frontend-port-443
       default_backend backend-port-443
       bind *:443
     backend backend-port-443
-      server server-443 gitpod.takutakahashi.dev:443
+      server server-443 directip.takutakahashi.dev:443
 
     frontend frontend-port-9500
       default_backend backend-port-9500
       bind *:9500
     backend backend-port-9500
-      server server-9500 gitpod.takutakahashi.dev:9500
+      server server-9500 directip.takutakahashi.dev:9500
+
+    frontend frontend-port-3023
+      default_backend backend-port-3023
+      bind *:3023
+    backend backend-port-3023
+      server server-80 directip.takutakahashi.dev:3023
+
+    frontend frontend-port-3024
+      default_backend backend-port-3024
+      bind *:3024
+    backend backend-port-3024
+      server server-80 directip.takutakahashi.dev:3024
+
+    frontend frontend-port-3026
+      default_backend backend-port-3026
+      bind *:3026
+    backend backend-port-3026
+      server server-80 directip.takutakahashi.dev:3026
+
+    frontend frontend-port-3036
+      default_backend backend-port-3036
+      bind *:3036
+    backend backend-port-3036
+      server server-80 directip.takutakahashi.dev:3036
+
+    frontend frontend-port-22
+      default_backend backend-port-22
+      bind *:22
+    backend backend-port-22
+      server server-80 directip.takutakahashi.dev:22
+
+    frontend frontend-port-2222
+      default_backend backend-port-2222
+      bind *:2222
+    backend backend-port-2222
+      server server-9500 directip.takutakahashi.dev:2222
 kind: ConfigMap
 metadata:
   name: gitpod-proxy-config

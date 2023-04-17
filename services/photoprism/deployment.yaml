@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: photoprism
+  name: photoprism
+  namespace: photoprism
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: photoprism
+  template:
+    metadata:
+      labels:
+        app: photoprism
+    spec:
+      containers:
+      - image: photoprism/photoprism:ubuntu
+        name: photoprism
+        env:
+          - name: PHOTOPRISM_DATABASE_DRIVER
+            value: mysql
+          - name: PHOTOPRISM_ADMIN_PASSWORD
+            value: takutakataku
+          - name: MYSQL_DATABASE
+            value: photoprism
+          - name: MYSQL_ROOT_PASSWORD
+          - name: PHOTOPRISM_DATABASE_SERVER
+            value: "db:3306"
+          - name: PHOTOPRISM_DATABASE_NAME
+            value: "photoprism"
+          - name: PHOTOPRISM_DATABASE_USER
+            value: "root"
+          - name: PHOTOPRISM_DATABASE_PASSWORD
+            valueFrom:
+              secretKeyRef:
+                name: db-secret
+                key: password
+

@@ -16,11 +16,17 @@ spec:
         app: mirakurun
         tuner: dvb
     spec:
+      tolerations:
+        - effect: NoSchedule
+          key: node-role/baremetal
+          value: "true"
       nodeSelector:
-        app: mirakurun
         tuner: dvb
       containers:
-      - image: chinachu/mirakurun
+      - image: chinachu/mirakurun:3.9.0-rc.4
+        command:
+          - sleep
+          - infinity
         imagePullPolicy: Always
         name: api
         securityContext:

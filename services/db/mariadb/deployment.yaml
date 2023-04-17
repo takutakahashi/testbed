@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: db
+  name: db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: db
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: db
+    spec:
+      containers:
+      - 
+        env:
+        - name: MARIADB_ROOT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: db-secret
+              key: password
+        image: mariadb:10.10
+        imagePullPolicy: Always
+        name: db
+        volumeMounts:
+        - mountPath: /var/lib/mysql
+          name: vol
+      volumes:
+      - name: vol
+        persistentVolumeClaim:
+          claimName: db-pvc
