@@ -104,7 +104,7 @@ data:
         - BS
         - CS
       command: /app-config/recpt1 --device /dev/px4video0 --lnb 15 <channel> - -
-      decoder: arib-b25-stream-test
+      decoder: /opt/bin/arib-b25-stream-test
       isDisabled: true
     
     - name: PX-W3U4-S2
@@ -112,21 +112,21 @@ data:
         - BS
         - CS
       command: /app-config/recpt1 --device /dev/px4video1 --lnb 15 <channel> - -
-      decoder: arib-b25-stream-test
+      decoder: /opt/bin/arib-b25-stream-test
       isDisabled: true
     
     - name: PX-W3U4-T1
       types:
         - GR
       command: /app-config/recpt1 --device /dev/px4video2 <channel> - -
-      decoder: arib-b25-stream-test
+      decoder: /opt/bin/arib-b25-stream-test
       isDisabled: false
     
     - name: PX-W3U4-T2
       types:
         - GR
       command: /app-config/recpt1 --device /dev/px4video3 <channel> - -
-      decoder: arib-b25-stream-test
+      decoder: /opt/bin/arib-b25-stream-test
       isDisabled: false
 ---
 apiVersion: v1
