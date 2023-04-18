@@ -92,6 +92,7 @@ data:
         - GR
       remoteMirakurunHost: mirakurun-dvb
       remoteMirakurunDecoder: true
+      isDisabled: true
 ---
 apiVersion: v1
 kind: Service
