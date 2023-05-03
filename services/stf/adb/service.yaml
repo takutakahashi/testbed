@@ -9,6 +9,9 @@ spec:
   - name: port1
     port: 5037
     protocol: TCP
+  - name: port2
+    port: 5555
+    protocol: TCP
   selector:
     app: adb
   type: LoadBalancer
