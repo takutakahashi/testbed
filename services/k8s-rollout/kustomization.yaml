@@ -1,0 +1,7 @@
+namespace: k8s-rollout
+resources:
+  - ./deployment.yaml
+  - ./service.yaml
+  - ./ingress.yaml
+  - ./clusterrole.yaml
+  - ./clusterrolebinding.yaml

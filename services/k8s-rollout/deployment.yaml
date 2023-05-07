@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: k8s-rollout
+  name: k8s-rollout
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: k8s-rollout
+  template:
+    metadata:
+      labels:
+        app: k8s-rollout
+    spec:
+      containers:
+      - image: ghcr.io/takutakahashi/k8s-rollout:c9777a39641ca2796e562628875c274beeb5651c
+        command:
+          - "/cmd"
+        imagePullPolicy: Always
+        name: app
