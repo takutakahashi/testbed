@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: k8s-rollout
+  name: k8s-rollout
+spec:
+  ports:
+  - name: http
+    port: 80
+    protocol: TCP
+    targetPort: 1323
+  selector:
+    app: k8s-rollout
+  type: ClusterIP
