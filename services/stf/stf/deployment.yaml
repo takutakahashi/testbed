@@ -22,7 +22,7 @@ spec:
         - stf
         - local
         - --adb-host
-        - adb
+        - 10.10.1.72
         - --public-ip
         - 10.10.0.165
         - --provider-min-port
