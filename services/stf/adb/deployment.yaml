@@ -25,6 +25,7 @@ spec:
       - name: usb
         hostPath:
           path: /dev/bus/usb
+      hostNetwork: true
       containers:
       - image: devicefarmer/adb:latest
         imagePullPolicy: Always
