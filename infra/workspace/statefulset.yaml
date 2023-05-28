@@ -23,7 +23,7 @@ spec:
         env:
         - name: AUTHORIZED_KEYS_URL
           value: https://github.com/takutakahashi.keys
-        image: ghcr.io/takutakahashi/workspace:e869133144add1d89a48d4bb7c4ed3db64b691ef
+        image: ghcr.io/takutakahashi/workspace:4cd5b6a92baf15f398919444532785b76d4ca787
         imagePullPolicy: IfNotPresent
         resources:
           requests:
@@ -39,7 +39,7 @@ spec:
         - -av
         - /home/owner/
         - /tmp/owner
-        image: ghcr.io/takutakahashi/workspace:e869133144add1d89a48d4bb7c4ed3db64b691ef
+        image: ghcr.io/takutakahashi/workspace:4cd5b6a92baf15f398919444532785b76d4ca787
         imagePullPolicy: IfNotPresent
         name: cp
         volumeMounts:
