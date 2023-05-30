@@ -5,9 +5,7 @@ metadata:
     app: mirakurun
     tuner/px4: "true"
   name: mirakurun-px4
-  namespace: default
 spec:
-  revisionHistoryLimit: 10
   selector:
     matchLabels:
       app: mirakurun
@@ -18,13 +16,43 @@ spec:
         app: mirakurun
         tuner/px4: "true"
     spec:
+      tolerations:
+      - key: node-role/baremetal
+        operator: Equal
+        value: "true"
+        effect: NoSchedule
+      nodeSelector:
+        tuner/px4: "true"
+      initContainers:
+      - image: busybox
+        name: cp
+        command:
+          - cp
+          - /src/tuners.yml
+          - /dst/tuners.yml
+        volumeMounts:
+        - mountPath: /src
+          name: mirakurun-config
+        - mountPath: /dst
+          name: app-config
+      - image: ghcr.io/takutakahashi/recpt1-build:9811f7676a76d049cd95e0c66c627539713bc248
+        name: cp-recpt1
+        command:
+          - cp
+          - /usr/local/bin/recpt1
+          - /dst/
+        volumeMounts:
+        - mountPath: /dst
+          name: app-config
       containers:
-      - env:
-        - name: TZ
-          value: Asia/Tokyo
-        image: chinachu/mirakurun
+      - image: chinachu/mirakurun
         imagePullPolicy: Always
         name: api
+        securityContext:
+          privileged: true
+        env:
+        - name: TZ
+          value: Asia/Tokyo
         ports:
         - containerPort: 40772
           name: mirakurun
@@ -32,10 +60,6 @@ spec:
         - containerPort: 9229
           name: unknown
           protocol: TCP
-        securityContext:
-          privileged: true
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
         volumeMounts:
         - mountPath: /app-config
           name: app-config
@@ -47,72 +71,80 @@ spec:
           name: devpx4video2
         - mountPath: /dev/px4video3
           name: devpx4video3
-      dnsPolicy: ClusterFirst
-      initContainers:
-      - command:
-        - cp
-        - /src/tuners.yml
-        - /dst/tuners.yml
-        image: busybox
-        imagePullPolicy: Always
-        name: cp
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        volumeMounts:
-        - mountPath: /src
-          name: mirakurun-config
-        - mountPath: /dst
-          name: app-config
-      - command:
-        - cp
-        - /usr/local/bin/recpt1
-        - /dst/
-        image: ghcr.io/takutakahashi/recpt1-build:8ea6ab36bd273b8e4e5b2b15d04c00406d4abe2e
-        imagePullPolicy: Always
-        name: cp-recpt1
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
-        volumeMounts:
-        - mountPath: /dst
-          name: app-config
-      nodeSelector:
-        tuner/px4: "true"
-      restartPolicy: Always
-      schedulerName: default-scheduler
-      terminationGracePeriodSeconds: 30
-      tolerations:
-      - effect: NoSchedule
-        key: node-role/baremetal
-        operator: Equal
-        value: "true"
       volumes:
       - name: app-config
-      - configMap:
-          defaultMode: 420
+        emptyDir: {}
+      - name: mirakurun-config
+        configMap:
           name: mirakurun-px4-config
-        name: mirakurun-config
-      - hostPath:
+      - name: devbus
+        hostPath:
           path: /dev/bus
-          type: ""
-        name: devbus
-      - hostPath:
+      - name: devpx4video0
+        hostPath:
           path: /dev/px4video0
-          type: ""
-        name: devpx4video0
-      - hostPath:
+      - name: devpx4video1
+        hostPath:
           path: /dev/px4video1
-          type: ""
-        name: devpx4video1
-      - hostPath:
+      - name: devpx4video2
+        hostPath:
           path: /dev/px4video2
-          type: ""
-        name: devpx4video2
-      - hostPath:
+      - name: devpx4video3
+        hostPath:
           path: /dev/px4video3
-          type: ""
-        name: devpx4video3
-  updateStrategy:
-    rollingUpdate:
-      maxSurge: 0
-      maxUnavailable: 1
-    type: RollingUpdate
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mirakurun-px4-config
+data:
+  tuners.yml: |
+    - name: PX-W3U4-S1
+      types:
+        - BS
+        - CS
+      command: /app-config/recpt1 --device /dev/px4video0 --lnb 15 <channel> - -
+      decoder: /opt/bin/arib-b25-stream-test
+      isDisabled: true
+    
+    - name: PX-W3U4-S2
+      types:
+        - BS
+        - CS
+      command: /app-config/recpt1 --device /dev/px4video1 --lnb 15 <channel> - -
+      decoder: /opt/bin/arib-b25-stream-test
+      isDisabled: true
+    
+    - name: PX-W3U4-T1
+      types:
+        - GR
+      command: /app-config/recpt1 --device /dev/px4video2 <channel> - -
+      decoder: /opt/bin/arib-b25-stream-test
+      isDisabled: false
+    
+    - name: PX-W3U4-T2
+      types:
+        - GR
+      command: /app-config/recpt1 --device /dev/px4video3 <channel> - -
+      decoder: /opt/bin/arib-b25-stream-test
+      isDisabled: false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: mirakurun
+    tuner: px4
+  name: mirakurun-px4
+spec:
+  type: ClusterIP
+  ports:
+  - name: mirakurun
+    port: 40772
+    protocol: TCP
+  - name: unknown
+    port: 9229
+    protocol: TCP
+  selector:
+    app: mirakurun
+    tuner/px4: "true"
