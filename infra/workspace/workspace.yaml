@@ -32,9 +32,9 @@ spec:
         imagePullPolicy: IfNotPresent
         name: workspace
         volumeMounts:
-          #        - mountPath: /home/owner
-          #          name: home
-        - mountPath: /home/owner/.dev/backup
+        - mountPath: /home/owner
+          name: home-tmp
+        - mountPath: /opt/backup
           name: backup-credentials
         - mountPath: /etc/ssh
           name: ssh-key-dir
@@ -63,6 +63,26 @@ spec:
           name: ssh-host-key
         - mountPath: /etc/ssh
           name: ssh-key-dir
+      - command:
+        #        - sleep
+        #        - infinity
+        - restic
+        - --insecure-tls
+        - restore
+        - latest
+        - --target
+        - /home/owner
+        image: restic/restic
+        imagePullPolicy: IfNotPresent
+        name: restore
+        envFrom:
+        - secretRef:
+            name: workspace-backup-env
+        volumeMounts:
+        - mountPath: /home/owner
+          name: home-tmp
+        - mountPath: /opt/backup
+          name: backup-credentials
       nodeSelector:
         workspace: "true"
       restartPolicy: Always
@@ -71,6 +91,8 @@ spec:
         configMap:
           name: setup-ssh
       - name: ssh-key-dir
+        emptyDir: {}
+      - name: home-tmp
         emptyDir: {}
       - name: ssh-host-key
         secret:
