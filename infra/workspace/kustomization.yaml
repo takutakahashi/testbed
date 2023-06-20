@@ -1,6 +1,7 @@
 resources:
   - ssh-host-key.yaml
   - workspace.yaml
+  - workspace-backup-env.sealedsecret.yaml
 configMapGenerator:
 - name: setup-ssh
   files:
