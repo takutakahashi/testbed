@@ -35,7 +35,11 @@ spec:
           name: mirakurun-config
         - mountPath: /dst
           name: app-config
-      - image: ghcr.io/takutakahashi/pvr-base:94c45137a17b2ffd4fae2be305c28e0b22753413
+      - image: ghcr.io/takutakahashi/pvr-base:9811f7676a76d049cd95e0c66c627539713bc248
+        name: base
+        securityContext:
+          privileged: true
+      - image: ghcr.io/takutakahashi/recpt1-build:9811f7676a76d049cd95e0c66c627539713bc248
         name: cp-recpt1
         command:
           - cp

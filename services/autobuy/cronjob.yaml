@@ -21,7 +21,7 @@ spec:
             - --ticker
             - ETH_JPY
             - --jpy
-            - "1000"
+            - "500"
 
           - name: buy-btc
             image: takutakahashi/autobuy
@@ -34,5 +34,5 @@ spec:
             - --ticker
             - BTC_JPY
             - --jpy
-            - "1000"
+            - "1500"
 
