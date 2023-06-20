@@ -27,13 +27,15 @@ spec:
           value: https://github.com/takutakahashi.keys
         envFrom:
         - secretRef:
-          name: workspace-backup-env
+            name: workspace-backup-env
         image: ghcr.io/takutakahashi/workspace:d8ca59889db09b63ec2218e9e9944234b41c3455
         imagePullPolicy: IfNotPresent
         name: workspace
         volumeMounts:
-        - mountPath: /home/owner
-          name: home
+          #        - mountPath: /home/owner
+          #          name: home
+        - mountPath: /home/owner/.dev/backup
+          name: backup-credentials
         - mountPath: /etc/ssh
           name: ssh-key-dir
       initContainers:
@@ -73,6 +75,9 @@ spec:
       - name: ssh-host-key
         secret:
           secretName: ssh-host-key
+      - name: backup-credentials
+        secret:
+          secretName: backup-credentials
   updateStrategy:
     rollingUpdate:
       partition: 0
