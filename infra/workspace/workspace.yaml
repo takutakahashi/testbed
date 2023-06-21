@@ -33,24 +33,13 @@ spec:
         name: workspace
         volumeMounts:
         - mountPath: /home/owner
-          #        name: home-tmp
+          # name: home-tmp
           name: home
         - mountPath: /opt/backup
           name: backup-credentials
         - mountPath: /etc/ssh
           name: ssh-key-dir
       initContainers:
-        #      - command:
-        #        - rsync
-        #        - -av
-        #        - /home/owner/
-        #        - /tmp/owner
-        #        image: ghcr.io/takutakahashi/workspace:d8ca59889db09b63ec2218e9e9944234b41c3455
-        #        imagePullPolicy: IfNotPresent
-        #        name: cp
-        #        volumeMounts:
-        #        - mountPath: /tmp/owner
-        #          name: home
       - command:
         - bash
         - /tmp/setup/setup-ssh.sh
@@ -64,24 +53,30 @@ spec:
           name: ssh-host-key
         - mountPath: /etc/ssh
           name: ssh-key-dir
-      - command:
-        - restic
-        - --insecure-tls
-        - restore
-        - latest
-        - --target
-        - /home/owner
-        image: restic/restic
-        imagePullPolicy: IfNotPresent
-        name: restore
-        envFrom:
-        - secretRef:
-            name: workspace-backup-env
-        volumeMounts:
-        - mountPath: /home/owner
-          name: home-tmp
-        - mountPath: /opt/backup
-          name: backup-credentials
+            #      - command:
+            #        - restic
+            #        - --insecure-tls
+            #        - restore
+            #        - latest
+            #        - --target
+            #        - /home/owner
+            #        image: restic/restic
+            #        imagePullPolicy: IfNotPresent
+            #        name: restore
+            #        securityContext:
+            #          runAsUser: 1001
+            #          runAsGroup: 1001
+            #        env:
+            #        - name: RESTIC_CACHE_DIR
+            #          value: /tmp/restic-cache
+            #        envFrom:
+            #        - secretRef:
+            #            name: workspace-backup-env
+            #        volumeMounts:
+            #        - mountPath: /home/owner
+            #          name: home-tmp
+            #        - mountPath: /opt/backup
+            #          name: backup-credentials
       nodeSelector:
         workspace: "true"
       restartPolicy: Always
