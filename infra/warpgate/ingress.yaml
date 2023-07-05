@@ -9,6 +9,16 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
+  - host: gateway.taka-app.net
+    http:
+      paths:
+      - backend:
+          service:
+            name: warpgate
+            port:
+              number: 443
+        path: /
+        pathType: ImplementationSpecific
   - host: gate.takutakahashi.dev
     http:
       paths:
@@ -23,3 +33,6 @@ spec:
   - hosts:
     - gate.takutakahashi.dev
     secretName: warpgate-tls
+  - hosts:
+    - gateway.taka-app.net
+    secretName: warpgate-takaapp-tls
