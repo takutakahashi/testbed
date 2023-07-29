@@ -1,0 +1,38 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  labels:
+    app: interval-camera
+  name: interval-camera
+spec:
+  schedule: "0 * * * *"
+  suspend: false
+  jobTemplate:
+    spec:
+      template:
+        metadata:
+          labels:
+            app: interval-camera
+        spec:
+          restartPolicy: Never
+          containers:
+          - image: "ghcr.io/takutakahashi/gphoto2:1bfd6c47d405bf18de4658fec595a671b2a58169"
+            securityContext:
+              privileged: true
+            imagePullPolicy: Always
+            name: worker
+            command:
+              - sh
+              - /opt/shot.sh
+            volumeMounts:
+            - mountPath: /dev/bus
+              name: devbus
+            - mountPath: /opt
+              name: scripts
+          volumes:
+          - name: devbus
+            hostPath:
+              path: /dev/bus
+          - name: scripts
+            configMap:
+              name: scripts

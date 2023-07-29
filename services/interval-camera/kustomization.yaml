@@ -1,0 +1,7 @@
+namespace: jobs
+resources:
+  - worker.yaml
+configMapGenerator:
+  - name: scripts
+    files:
+      - ./shot.sh
