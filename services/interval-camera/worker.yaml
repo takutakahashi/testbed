@@ -15,6 +15,11 @@ spec:
             app: interval-camera
         spec:
           restartPolicy: Never
+          tolerations:
+          - effect: NoSchedule
+            key: node-role/home
+            operator: Equal
+            value: "true"
           containers:
           - image: "ghcr.io/takutakahashi/gphoto2:1bfd6c47d405bf18de4658fec595a671b2a58169"
             securityContext:
@@ -22,11 +27,9 @@ spec:
             imagePullPolicy: Always
             name: worker
             command:
-              - sh
-              - /opt/shot.sh
+            - bash
+            - /opt/shot.sh
             volumeMounts:
-            - mountPath: /dev/bus
-              name: devbus
             - mountPath: /opt
               name: scripts
           volumes:
