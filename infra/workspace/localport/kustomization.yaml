@@ -1,0 +1,11 @@
+resources:
+  - rbac.yaml
+  - deployment.yaml
+  - service.yaml
+  - ingress.yaml
+  - certificate.yaml
+configMapGenerator:
+  - name: rotate
+    files:
+      - rotate.sh
+      - patch.tpl

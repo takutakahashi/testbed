@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: localport
+  name: localport
+  namespace: default
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: localport
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: localport
+    spec:
+      serviceAccount: deployment-editor
+      volumes:
+      - name: rotate
+        configMap:
+          name: rotate
+      containers:
+      - name: rotate
+        image: ubuntu:22.04
+        command:
+          - bash
+          - /files/rotate.sh
+        volumeMounts:
+          - name: rotate
+            mountPath: /files
+      - env:
+        - name: ENTRYPOINT_HOST
+          value: ws.lab.takutakahashi.dev
+        image: ghcr.io/takutakahashi/localport:latest
+        imagePullPolicy: Always
+        name: localport
+      restartPolicy: Always
