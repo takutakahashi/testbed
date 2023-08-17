@@ -1,0 +1,40 @@
+# default-namespace-role.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  namespace: default
+  name: edit-deployment
+rules:
+- apiGroups: [""]
+  resources: ["pods"]
+  verbs: ["get"]
+- apiGroups: ["apps"]
+  resources: ["deployments"]
+  verbs: ["get", "update", "patch"]
+
+---
+
+# default-namespace-rolebinding.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: edit-deployment-binding
+  namespace: default
+subjects:
+- kind: ServiceAccount
+  name: deployment-editor
+  namespace: default
+roleRef:
+  kind: Role
+  name: edit-deployment
+  apiGroup: rbac.authorization.k8s.io
+
+---
+
+# default-namespace-serviceaccount.yaml
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: deployment-editor
+  namespace: default
+

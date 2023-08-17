@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: localport
+  name: localport
+  namespace: default
+spec:
+  ports:
+  - port: 80
+  selector:
+    app: localport
+  type: LoadBalancer
