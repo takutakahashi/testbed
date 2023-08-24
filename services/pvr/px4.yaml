@@ -35,10 +35,17 @@ spec:
           name: mirakurun-config
         - mountPath: /dst
           name: app-config
-      - image: ghcr.io/takutakahashi/pvr-base:9811f7676a76d049cd95e0c66c627539713bc248
+      - image: ghcr.io/takutakahashi/pvr-base:cc311a5029bff4e903ddd3742e24d54d509b283c
         name: base
         securityContext:
           privileged: true
+        volumeMounts:
+        - name: firmware
+          mountPath: /lib/firmware
+        - name: modules
+          mountPath: /lib/modules
+        - name: udevrules
+          mountPath: /etc/udev/rules.d
       - image: ghcr.io/takutakahashi/recpt1-build:9811f7676a76d049cd95e0c66c627539713bc248
         name: cp-recpt1
         command:
@@ -84,6 +91,15 @@ spec:
       - name: devbus
         hostPath:
           path: /dev/bus
+      - name: firmware
+        hostPath:
+          path: /lib/firmware
+      - name: modules
+        hostPath:
+          path: /lib/modules
+      - name: udevrules
+        hostPath:
+          path: /etc/udev/rules.d
       - name: devpx4video0
         hostPath:
           path: /dev/px4video0
