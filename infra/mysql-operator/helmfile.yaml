@@ -1,0 +1,7 @@
+repositories:
+  - name: mysql-operator
+    url: https://mysql.github.io/mysql-operator/
+releases:
+  - name: mysql-operator
+    namespace: mysql-operator
+    chart: mysql-operator/mysql-operator
