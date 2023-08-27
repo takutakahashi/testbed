@@ -7,3 +7,4 @@ resources:
   - external-secrets.yaml
   - dynamic-localpv-provisioner.yaml
   - reloader.yaml
+  - mysql-operator.yaml
