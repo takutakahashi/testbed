@@ -1,0 +1,11 @@
+apiVersion: sshpiper.com/v1beta1
+kind: Pipe
+metadata:
+  name: ws
+spec:
+  from:
+    - username: "owner"
+  to:
+    host: workspace.default.svc.cluster.local:22
+    username: "owner"
+    ignore_hostkey: true

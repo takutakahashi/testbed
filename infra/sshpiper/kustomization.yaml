@@ -1,0 +1,5 @@
+namespace: sshpiper
+resources:
+  - https://raw.githubusercontent.com/tg123/sshpiper-chart/main/charts/sshpiper/crds/crd.yaml
+  - install.yaml
+  - pipe.yaml

@@ -1,0 +1,7 @@
+repositories:
+  - name: sshpiper
+    url: https://tg123.github.io/sshpiper-chart
+releases:
+  - name: sshpiper
+    chart: sshpiper/sshpiper
+    namespace: sshpiper
