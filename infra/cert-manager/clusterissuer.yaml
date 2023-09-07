@@ -10,54 +10,51 @@ spec:
       name: cert-manager-le-private-key
     server: https://acme-v02.api.letsencrypt.org/directory
     solvers:
-    - http01:
-        ingress:
-          class: nginx
-      selector:
-        dnsZones:
-        - epochub.com
-    - dns01:
-        route53:
-          accessKeyID: AKIASY6UDK327CTYLDQG
-          hostedZoneID: Z0971128BW4DIZDJ3HL3
-          region: us-east-1
-          secretAccessKeySecretRef:
-            key: secret-access-key
-            name: lab-takutakahashi-dev-route53-secret
-      selector:
-        dnsZones:
-        - lab.takutakahashi.dev
-    - dns01:
-        route53:
-          accessKeyID: AKIASY6UDK327CTYLDQG
-          hostedZoneID: Z08206143OKX3EUW2ALA7
-          region: us-east-1
-          secretAccessKeySecretRef:
-            key: secret-access-key
-            name: lab-takutakahashi-dev-route53-secret
-      selector:
-        dnsZones:
-        - takutakahashi.dev
-        - gp.takutakahashi.dev
-    - dns01:
-        route53:
-          accessKeyID: AKIASY6UDK327CTYLDQG
-          hostedZoneID: Z047463314B42TUZOWL3L
-          region: us-east-1
-          secretAccessKeySecretRef:
-            key: secret-access-key
-            name: lab-takutakahashi-dev-route53-secret
-      selector:
-        dnsZones:
-        - in.takutakahashi.dev
-    - dns01:
-        route53:
-          accessKeyID: AKIASY6UDK327CTYLDQG
-          hostedZoneID: Z04628681KGVQWJH2MYEE
-          region: us-east-1
-          secretAccessKeySecretRef:
-            key: secret-access-key
-            name: lab-takutakahashi-dev-route53-secret
-      selector:
-        dnsZones:
-        - taka-app.net
+      - http01:
+          ingress:
+            class: nginx
+        selector:
+          dnsZones:
+            - epochub.com
+      - dns01:
+          route53:
+            accessKeyID: AKIASY6UDK327CTYLDQG
+            hostedZoneID: Z0971128BW4DIZDJ3HL3
+            region: us-east-1
+            secretAccessKeySecretRef:
+              key: secret-access-key
+              name: lab-takutakahashi-dev-route53-secret
+        selector:
+          dnsZones:
+            - lab.takutakahashi.dev
+      - dns01:
+          route53:
+            accessKeyID: AKIASY6UDK327CTYLDQG
+            hostedZoneID: Z08206143OKX3EUW2ALA7
+            region: us-east-1
+            secretAccessKeySecretRef:
+              key: secret-access-key
+              name: lab-takutakahashi-dev-route53-secret
+        selector:
+          dnsZones:
+            - takutakahashi.dev
+            - gp.takutakahashi.dev
+      - dns01:
+          route53:
+            accessKeyID: AKIASY6UDK327CTYLDQG
+            hostedZoneID: Z047463314B42TUZOWL3L
+            region: us-east-1
+            secretAccessKeySecretRef:
+              key: secret-access-key
+              name: lab-takutakahashi-dev-route53-secret
+        selector:
+          dnsZones:
+            - in.takutakahashi.dev
+      - dns01:
+          cloudflare:
+            apiTokenSecretRef:
+              name: cloudflare-api-token-secret
+              key: api-token
+        selector:
+          dnsZones:
+            - taka-app.net
