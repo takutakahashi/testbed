@@ -1,0 +1,8 @@
+ingress:
+  enabled: true
+  host: longhorn.in.takutakahashi.dev
+  tls: true
+  ingressClassName: nginx
+  tlsSecret: longhorn-ui
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
