@@ -20,96 +20,107 @@ spec:
         app: workspace
     spec:
       containers:
-      - command:
-        - /home/owner/.dev/bin/entrypoint-sshd
-        env:
-        - name: AUTHORIZED_KEYS_URL
-          value: https://github.com/takutakahashi.keys
-        envFrom:
-        - secretRef:
-            name: workspace-backup-env
-        image: ghcr.io/takutakahashi/workspace:d8ca59889db09b63ec2218e9e9944234b41c3455
-        imagePullPolicy: IfNotPresent
-        name: workspace
-        volumeMounts:
-        - mountPath: /home/owner
-          # name: home-tmp
-          name: home
-        - mountPath: /opt/backup
-          name: backup-credentials
-        - mountPath: /etc/ssh
-          name: ssh-key-dir
+        - command:
+            - /home/owner/.dev/bin/entrypoint-sshd
+          env:
+            - name: AUTHORIZED_KEYS_URL
+              value: https://github.com/takutakahashi.keys
+          envFrom:
+            - secretRef:
+                name: workspace-backup-env
+          image: ghcr.io/takutakahashi/workspace:023a9ce0b4ea54d152cee7172c5d0c738ee2376d
+          imagePullPolicy: IfNotPresent
+          name: workspace
+          volumeMounts:
+            - mountPath: /home/owner
+              # name: home-tmp
+              name: home
+            - mountPath: /opt/backup
+              name: backup-credentials
+            - mountPath: /etc/ssh
+              name: ssh-key-dir
       initContainers:
-      - command:
-        - bash
-        - /tmp/setup/setup-ssh.sh
-        image: ubuntu
-        imagePullPolicy: IfNotPresent
-        name: setup-ssh
-        volumeMounts:
-        - mountPath: /tmp/setup
+        - command:
+            - bash
+            - /tmp/setup/setup-ssh.sh
+          image: ubuntu
+          imagePullPolicy: IfNotPresent
           name: setup-ssh
-        - mountPath: /mnt/ssh
-          name: ssh-host-key
-        - mountPath: /etc/ssh
-          name: ssh-key-dir
-            #      - command:
-            #        - restic
-            #        - --insecure-tls
-            #        - restore
-            #        - latest
-            #        - --target
-            #        - /home/owner
-            #        image: restic/restic
-            #        imagePullPolicy: IfNotPresent
-            #        name: restore
-            #        securityContext:
-            #          runAsUser: 1001
-            #          runAsGroup: 1001
-            #        env:
-            #        - name: RESTIC_CACHE_DIR
-            #          value: /tmp/restic-cache
-            #        envFrom:
-            #        - secretRef:
-            #            name: workspace-backup-env
-            #        volumeMounts:
-            #        - mountPath: /home/owner
-            #          name: home-tmp
-            #        - mountPath: /opt/backup
-            #          name: backup-credentials
+          volumeMounts:
+            - mountPath: /tmp/setup
+              name: setup-ssh
+            - mountPath: /mnt/ssh
+              name: ssh-host-key
+            - mountPath: /etc/ssh
+              name: ssh-key-dir
+                #      - command:
+                #        - restic
+                #        - --insecure-tls
+                #        - restore
+                #        - latest
+                #        - --target
+                #        - /home/owner
+                #        image: restic/restic
+                #        imagePullPolicy: IfNotPresent
+                #        name: restore
+                #        securityContext:
+                #          runAsUser: 1001
+                #          runAsGroup: 1001
+                #        env:
+                #        - name: RESTIC_CACHE_DIR
+                #          value: /tmp/restic-cache
+                #        envFrom:
+                #        - secretRef:
+                #            name: workspace-backup-env
+                #        volumeMounts:
+                #        - mountPath: /home/owner
+                #          name: home-tmp
+                #        - mountPath: /opt/backup
+                #          name: backup-credentials
       nodeSelector:
         workspace: "true"
       restartPolicy: Always
       volumes:
-      - name: setup-ssh
-        configMap:
-          name: setup-ssh
-      - name: ssh-key-dir
-        emptyDir: {}
-      - name: home-tmp
-        emptyDir: {}
-      - name: ssh-host-key
-        secret:
-          secretName: ssh-host-key
-      - name: backup-credentials
-        secret:
-          secretName: backup-credentials
+        - name: setup-ssh
+          configMap:
+            name: setup-ssh
+        - name: ssh-key-dir
+          emptyDir: {}
+        - name: home-tmp
+          emptyDir: {}
+        - name: ssh-host-key
+          secret:
+            secretName: ssh-host-key
+        - name: backup-credentials
+          secret:
+            secretName: backup-credentials
   updateStrategy:
     rollingUpdate:
       partition: 0
     type: RollingUpdate
   volumeClaimTemplates:
-  - apiVersion: v1
-    kind: PersistentVolumeClaim
-    metadata:
-      creationTimestamp: null
-      name: home
-    spec:
-      accessModes:
-      - ReadWriteOnce
-      resources:
-        requests:
-          storage: 100Gi
-      volumeMode: Filesystem
-    status:
-      phase: Pending
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: home
+      spec:
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Gi
+        volumeMode: Filesystem
+          #    - apiVersion: v1
+          #      kind: PersistentVolumeClaim
+          #      metadata:
+          #        creationTimestamp: null
+          #        name: home-longhorn
+          #      spec:
+          #        storageClassName: longhorn
+          #        accessModes:
+          #          - ReadWriteOnce
+          #        resources:
+          #          requests:
+          #            storage: 100Gi
+          #        volumeMode: Filesystem
