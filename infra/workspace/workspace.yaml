@@ -35,6 +35,9 @@ spec:
             - mountPath: /home/owner
               # name: home-tmp
               name: home
+            - mountPath: /home/owner2
+              # name: home-tmp
+              name: home-longhorn
             - mountPath: /opt/backup
               name: backup-credentials
             - mountPath: /etc/ssh
@@ -111,16 +114,16 @@ spec:
           requests:
             storage: 100Gi
         volumeMode: Filesystem
-          #    - apiVersion: v1
-          #      kind: PersistentVolumeClaim
-          #      metadata:
-          #        creationTimestamp: null
-          #        name: home-longhorn
-          #      spec:
-          #        storageClassName: longhorn
-          #        accessModes:
-          #          - ReadWriteOnce
-          #        resources:
-          #          requests:
-          #            storage: 100Gi
-          #        volumeMode: Filesystem
+    - apiVersion: v1
+      kind: PersistentVolumeClaim
+      metadata:
+        creationTimestamp: null
+        name: home-longhorn
+      spec:
+        storageClassName: longhorn
+        accessModes:
+          - ReadWriteOnce
+        resources:
+          requests:
+            storage: 100Gi
+        volumeMode: Filesystem
