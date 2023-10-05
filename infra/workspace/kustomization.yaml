@@ -3,7 +3,9 @@ resources:
   - workspace.yaml
   - workspace-backup-env.sealedsecret.yaml
   - backup-credentials.sealedsecret.yaml
+  - service.yaml
+  - service-mosh.yaml
 configMapGenerator:
-- name: setup-ssh
-  files:
-  - setup-ssh.sh
+  - name: setup-ssh
+    files:
+      - setup-ssh.sh
