@@ -18,10 +18,10 @@ spec:
   placement:
     all:
       tolerations:
-      - key: node-role/storage
-        operator: Equal
-        value: "true"
-        effect: NoSchedule
+        - key: node-role/storage
+          operator: Equal
+          value: "true"
+          effect: NoSchedule
   dataDirHostPath: /var/lib/rook
   removeOSDsIfOutAndSafeToRemove: true
   mon:
@@ -40,8 +40,8 @@ spec:
   continueUpgradeAfterChecksEvenIfNotHealthy: false
   mgr:
     modules:
-    - name: pg_autoscaler
-      enabled: true
+      - name: pg_autoscaler
+        enabled: true
   dashboard:
     enabled: false
     ssl: false
@@ -52,76 +52,76 @@ spec:
     rulesNamespace: rook-ceph
   storage:
     storageClassDeviceSets:
-    - name: set3
-      count: 1
-      portable: false
-      tuneDeviceClass: true
-      placement:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: node-role.kubernetes.io/storage
-                operator: In
-                values:
-                - "true"
-        topologySpreadConstraints:
-        - maxSkew: 2
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchExpressions:
-            - key: app
-              operator: In
-              values:
-              - rook-ceph-osd
-              - rook-ceph-osd-prepare
-      volumeClaimTemplates:
-      - metadata:
-          name: data
-        spec:
-          resources:
-            requests:
-              storage: 300Gi
-          storageClassName: ceph-backend
-          volumeMode: Block
-          accessModes:
-            - ReadWriteOnce
-    - name: set-raw
-      count: 2
-      portable: false
-      tuneDeviceClass: true
-      placement:
-        nodeAffinity:
-          requiredDuringSchedulingIgnoredDuringExecution:
-            nodeSelectorTerms:
-            - matchExpressions:
-              - key: openebs.io/devname
-                operator: In
-                values:
-                - ceph-backend
-        topologySpreadConstraints:
-        - maxSkew: 1
-          topologyKey: kubernetes.io/hostname
-          whenUnsatisfiable: DoNotSchedule
-          labelSelector:
-            matchExpressions:
-            - key: app
-              operator: In
-              values:
-              - rook-ceph-osd
-              - rook-ceph-osd-prepare
-      volumeClaimTemplates:
-      - metadata:
-          name: data
-        spec:
-          resources:
-            requests:
-              storage: 400Gi
-          storageClassName: ceph-backend-device
-          volumeMode: Block
-          accessModes:
-            - ReadWriteOnce
+      - name: set3
+        count: 1
+        portable: false
+        tuneDeviceClass: true
+        placement:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: node-role.kubernetes.io/storage
+                      operator: In
+                      values:
+                        - "true"
+          topologySpreadConstraints:
+            - maxSkew: 2
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - rook-ceph-osd
+                      - rook-ceph-osd-prepare
+        volumeClaimTemplates:
+          - metadata:
+              name: data
+            spec:
+              resources:
+                requests:
+                  storage: 300Gi
+              storageClassName: ceph-backend
+              volumeMode: Block
+              accessModes:
+                - ReadWriteOnce
+      - name: set-raw
+        count: 3
+        portable: false
+        tuneDeviceClass: true
+        placement:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: openebs.io/devname
+                      operator: In
+                      values:
+                        - ceph-backend
+          topologySpreadConstraints:
+            - maxSkew: 2
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - rook-ceph-osd
+                      - rook-ceph-osd-prepare
+        volumeClaimTemplates:
+          - metadata:
+              name: data
+            spec:
+              resources:
+                requests:
+                  storage: 400Gi
+              storageClassName: ceph-backend-device
+              volumeMode: Block
+              accessModes:
+                - ReadWriteOnce
   disruptionManagement:
     managePodBudgets: false
     osdMaintenanceTimeout: 30
