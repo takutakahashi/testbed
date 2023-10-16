@@ -1,3 +1,19 @@
+longhornManager:
+  tolerations:
+    - effect: NoSchedule
+      key: node-role/storage
+      value: "true"
+longhornDriver:
+  tolerations:
+    - effect: NoSchedule
+      key: node-role/storage
+      value: "true"
+longhornUI:
+  tolerations:
+    - effect: NoSchedule
+      key: node-role/storage
+      value: "true"
+
 ingress:
   enabled: true
   host: longhorn.in.takutakahashi.dev

@@ -4226,6 +4226,10 @@ spec:
         secret:
           secretName: longhorn-grpc-tls
           optional: true
+      tolerations:
+      - effect: NoSchedule
+        key: node-role/storage
+        value: "true"
       serviceAccountName: longhorn-service-account
   updateStrategy:
     rollingUpdate:
@@ -4299,6 +4303,10 @@ spec:
             value: "longhornio/csi-snapshotter:v6.2.1"
           - name: CSI_LIVENESS_PROBE_IMAGE
             value: "longhornio/livenessprobe:v2.9.0"
+      tolerations:
+      - effect: NoSchedule
+        key: node-role/storage
+        value: "true"
       serviceAccountName: longhorn-service-account
       securityContext:
         runAsUser: 0
@@ -4369,6 +4377,10 @@ spec:
         name: nginx-config
       - emptyDir: {}
         name: var-run
+      tolerations:
+      - effect: NoSchedule
+        key: node-role/storage
+        value: "true"
 ---
 # Source: longhorn/templates/ingress.yaml
 apiVersion: networking.k8s.io/v1
@@ -4448,6 +4460,10 @@ spec:
               fieldPath: metadata.namespace
       restartPolicy: OnFailure
       serviceAccountName: longhorn-service-account
+      tolerations:
+      - effect: NoSchedule
+        key: node-role/storage
+        value: "true"
 ---
 # Source: longhorn/templates/preupgrade-job.yaml
 apiVersion: batch/v1
@@ -4491,6 +4507,10 @@ spec:
               fieldPath: metadata.namespace
       restartPolicy: OnFailure
       serviceAccountName: longhorn-service-account
+      tolerations:
+      - effect: NoSchedule
+        key: node-role/storage
+        value: "true"
 ---
 # Source: longhorn/templates/uninstall-job.yaml
 apiVersion: batch/v1
@@ -4535,4 +4555,8 @@ spec:
               fieldPath: metadata.namespace
       restartPolicy: Never
       serviceAccountName: longhorn-service-account
+      tolerations:
+      - effect: NoSchedule
+        key: node-role/storage
+        value: "true"
 
