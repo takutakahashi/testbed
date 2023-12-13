@@ -1,3 +1,4 @@
+namespace: n8n
 resources:
   - https://raw.githubusercontent.com/n8n-io/n8n-kubernetes-hosting/main/namespace.yaml
   - https://raw.githubusercontent.com/n8n-io/n8n-kubernetes-hosting/main/n8n-claim0-persistentvolumeclaim.yaml
@@ -8,3 +9,4 @@ resources:
   - https://raw.githubusercontent.com/n8n-io/n8n-kubernetes-hosting/main/postgres-deployment.yaml
   - https://raw.githubusercontent.com/n8n-io/n8n-kubernetes-hosting/main/postgres-secret.yaml
   - https://raw.githubusercontent.com/n8n-io/n8n-kubernetes-hosting/main/postgres-service.yaml
+  - ingress.yaml
