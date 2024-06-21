@@ -10,3 +10,4 @@ resources:
   - mysql-operator.yaml
   - postgres-operator.yaml
   - keycloak.yaml
+  - topolvm.yaml
