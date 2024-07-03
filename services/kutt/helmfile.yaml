@@ -1,0 +1,9 @@
+repositories:
+  - name: christianhuth
+    url: https://christianhuth.github.io/helm-charts
+releases:
+  - name: kutt
+    namespace: kutt
+    chart: christianhuth/kutt
+    values:
+      - values.yaml
