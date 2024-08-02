@@ -8,9 +8,11 @@ metadata:
     metallb.universe.tf/allow-shared-ip: "workspace-10.30.0.12"
 spec:
   type: LoadBalancer
+  loadBalancerIP: 10.30.0.12
   ports:
     - name: ssh
       protocol: TCP
-      port: 22
+      port: 2222
+      targetPort: 22
   selector:
     app: workspace

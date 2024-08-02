@@ -49,46 +49,10 @@ spec:
     disable: false
   monitoring:
     enabled: true
-    rulesNamespace: rook-ceph
   storage:
     storageClassDeviceSets:
-      - name: set3
-        count: 1
-        portable: false
-        tuneDeviceClass: true
-        placement:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: node-role.kubernetes.io/storage
-                      operator: In
-                      values:
-                        - "true"
-          topologySpreadConstraints:
-            - maxSkew: 2
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - rook-ceph-osd
-                      - rook-ceph-osd-prepare
-        volumeClaimTemplates:
-          - metadata:
-              name: data
-            spec:
-              resources:
-                requests:
-                  storage: 300Gi
-              storageClassName: ceph-backend
-              volumeMode: Block
-              accessModes:
-                - ReadWriteOnce
       - name: set-raw
-        count: 3
+        count: 4
         portable: false
         tuneDeviceClass: true
         placement:
@@ -119,6 +83,41 @@ spec:
                 requests:
                   storage: 400Gi
               storageClassName: ceph-backend-device
+              volumeMode: Block
+              accessModes:
+                - ReadWriteOnce
+      - name: topolvm
+        count: 1
+        portable: false
+        tuneDeviceClass: true
+        placement:
+          nodeAffinity:
+            requiredDuringSchedulingIgnoredDuringExecution:
+              nodeSelectorTerms:
+                - matchExpressions:
+                    - key: topolvm.io/enabled
+                      operator: In
+                      values:
+                        - "true"
+          topologySpreadConstraints:
+            - maxSkew: 1
+              topologyKey: kubernetes.io/hostname
+              whenUnsatisfiable: DoNotSchedule
+              labelSelector:
+                matchExpressions:
+                  - key: app
+                    operator: In
+                    values:
+                      - rook-ceph-osd
+                      - rook-ceph-osd-prepare
+        volumeClaimTemplates:
+          - metadata:
+              name: data
+            spec:
+              resources:
+                requests:
+                  storage: 400Gi
+              storageClassName: topolvm-provisioner
               volumeMode: Block
               accessModes:
                 - ReadWriteOnce
