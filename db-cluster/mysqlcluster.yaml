@@ -1,0 +1,35 @@
+apiVersion: moco.cybozu.com/v1beta2
+kind: MySQLCluster
+metadata:
+  name: k3s
+spec:
+  mysqlConfigMapName: mycnf-k3s
+  replicationSourceSecretName: null
+  replicas: 3
+  primaryServiceTemplate:
+    spec:
+      type: LoadBalancer
+  podTemplate:
+    spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/instance
+                operator: In
+                values:
+                - k3s
+            topologyKey: "kubernetes.io/hostname"
+      containers:
+      - name: mysqld
+        image: ghcr.io/cybozu-go/moco/mysql:8.0.28
+  volumeClaimTemplates:
+  - metadata:
+      name: mysql-data
+    spec:
+      storageClassName: topolvm-provisioner
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 10Gi
