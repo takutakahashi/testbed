@@ -12,11 +12,36 @@ spec:
       labels:
         app: proxysql
     spec:
-      containers:
-      - name: proxysql
-        image: proxysql/proxysql:latest
+      initContainers:
+      - name: generate-proxysql-config
+        image: bhgedigital/envsubst
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - envsubst < /mnt/proxysql.cnf > /etc/proxysql/proxysql.cnf
+        env:
+        - name: DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: proxysql-secret
+              key: db-password
+        - name: DB_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: proxysql-secret
+              key: db-username
         volumeMounts:
         - name: proxysql-config-volume
+          mountPath: /mnt
+        - name: proxysql-config-output
+          mountPath: /etc/proxysql
+      containers:
+      - name: proxysql
+        imagePullPolicy: IfNotPresent
+        image: proxysql/proxysql:latest
+        volumeMounts:
+        - name: proxysql-config-output
           mountPath: /etc/proxysql.cnf
           subPath: proxysql.cnf
         ports:
@@ -26,3 +51,5 @@ spec:
       - name: proxysql-config-volume
         configMap:
           name: proxysql-config
+      - name: proxysql-config-output
+        emptyDir: {}
