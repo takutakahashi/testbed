@@ -1,0 +1,8 @@
+repositories:
+  - name: moco
+    url: https://cybozu-go.github.io/moco/
+releases:
+  - name: moco
+    namespace: moco-system
+    chart: moco/moco
+    createNamespace: true
