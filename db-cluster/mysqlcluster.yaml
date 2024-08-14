@@ -4,6 +4,7 @@ metadata:
   name: k3s
 spec:
   mysqlConfigMapName: mycnf-k3s
+    # replicationSourceSecretName: donor-secret
   replicationSourceSecretName: null
   replicas: 3
   primaryServiceTemplate:
@@ -32,4 +33,4 @@ spec:
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 10Gi
+          storage: 20Gi
