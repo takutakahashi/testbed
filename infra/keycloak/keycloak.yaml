@@ -1,0 +1,19 @@
+apiVersion: k8s.keycloak.org/v2alpha1
+kind: Keycloak
+metadata:
+  name: cluster
+spec:
+  instances: 3
+  db:
+    vendor: postgres
+    host: keycloak-primary.keycloak-operator.svc
+    usernameSecret:
+      name: keycloak-pguser-postgres
+      key: user
+    passwordSecret:
+      name: keycloak-pguser-postgres
+      key: password
+  http:
+    tlsSecret: cluster-tls-secret
+  hostname:
+    hostname: cloak.takutakahashi.dev

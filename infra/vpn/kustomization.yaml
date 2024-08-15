@@ -1,5 +1,0 @@
-namespace: vpn
-resources:
-  - namespace.yaml
-  - mongodb.yaml
-  - pritunl.yaml

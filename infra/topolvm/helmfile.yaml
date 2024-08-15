@@ -1,0 +1,7 @@
+repositories:
+  - name: topolvm
+    url: https://topolvm.github.io/topolvm
+releases:
+  - name: topolvm
+    namespace: topolvm-system
+    chart: topolvm/topolvm

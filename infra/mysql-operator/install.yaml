@@ -26,13 +26,13 @@ rules:
     verbs: ["get", "create", "list", "watch", "patch"]
   - apiGroups: [""]
     resources: ["configmaps"]
-    verbs: ["get", "create", "list", "watch", "patch"]
+    verbs: ["get", "create", "update", "list", "watch", "patch", "delete"]
   - apiGroups: [""]
     resources: ["services"]
-    verbs: ["get", "create", "list", "update"]
+    verbs: ["get", "create", "list", "update", "delete", "patch"]
   - apiGroups: [""]
     resources: ["serviceaccounts"]
-    verbs: ["get", "create"]
+    verbs: ["get", "create", "patch"]
   - apiGroups: [""]
     resources: ["events"]
     verbs: ["create", "patch", "update"]
@@ -152,10 +152,10 @@ metadata:
   name: mysql-operator
   namespace: mysql-operator
   labels:
-    version: "8.1.0-2.1.0"
+    version: "9.0.1-2.2.1"
     app.kubernetes.io/name: mysql-operator
     app.kubernetes.io/instance: mysql-operator
-    app.kubernetes.io/version: "8.1.0-2.1.0"
+    app.kubernetes.io/version: "9.0.1-2.2.1"
     app.kubernetes.io/component: controller
     app.kubernetes.io/managed-by: helm
     app.kubernetes.io/created-by: helm
@@ -171,7 +171,7 @@ spec:
     spec:
       containers:
         - name: mysql-operator
-          image: container-registry.oracle.com/mysql/community-operator:8.1.0-2.1.0
+          image: container-registry.oracle.com/mysql/community-operator:9.0.1-2.2.1
           imagePullPolicy: IfNotPresent
           args: ["mysqlsh", "--log-level=@INFO", "--pym", "mysqloperator", "operator"]
           env:

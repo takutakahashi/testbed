@@ -37,7 +37,6 @@ spec:
               name: lab-takutakahashi-dev-route53-secret
         selector:
           dnsZones:
-            - takutakahashi.dev
             - gp.takutakahashi.dev
       - dns01:
           route53:
@@ -58,3 +57,4 @@ spec:
         selector:
           dnsZones:
             - taka-app.net
+            - takutakahashi.dev

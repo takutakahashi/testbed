@@ -1,0 +1,4 @@
+namespace: kutt
+resources:
+  - install.yaml
+  - postgres.yaml

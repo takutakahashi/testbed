@@ -1,0 +1,22 @@
+externalPostgresql:
+  hostname: db-pgbouncer
+  auth:
+    existingSecret: db-pguser-db
+    username: pguser
+    userPasswordKey: password
+kutt:
+  domain:
+    useFirstIngressHost: true
+ingress:
+  enabled: true
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
+  hosts:
+    - host: s.taka-app.net
+      paths:
+        - path: /
+          pathType: ImplementationSpecific
+  tls:
+    - secretName: kutt-tls
+      hosts:
+        - s.taka-app.net

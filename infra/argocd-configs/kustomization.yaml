@@ -8,3 +8,6 @@ resources:
   - dynamic-localpv-provisioner.yaml
   - reloader.yaml
   - mysql-operator.yaml
+  - postgres-operator.yaml
+  - keycloak.yaml
+  - topolvm.yaml

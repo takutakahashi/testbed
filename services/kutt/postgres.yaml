@@ -1,0 +1,100 @@
+apiVersion: postgres-operator.crunchydata.com/v1beta1
+kind: PostgresCluster
+metadata:
+  labels:
+    pgv2.percona.com/version: 2.3.1
+  name: db
+  namespace: kutt
+spec:
+  backups:
+    pgbackrest:
+      image: percona/percona-postgresql-operator:2.3.1-ppg16-pgbackrest
+      manual:
+        options:
+        - --type=full
+        repoName: repo1
+      metadata:
+        labels:
+          pgv2.percona.com/version: 2.3.1
+      repoHost:
+        affinity:
+          podAntiAffinity:
+            preferredDuringSchedulingIgnoredDuringExecution:
+            - podAffinityTerm:
+                labelSelector:
+                  matchLabels:
+                    postgres-operator.crunchydata.com/data: pgbackrest
+                topologyKey: kubernetes.io/hostname
+              weight: 1
+      repos:
+      - name: repo1
+        volume:
+          volumeClaimSpec:
+            accessModes:
+            - ReadWriteOnce
+            resources:
+              requests:
+                storage: 1Gi
+  extensions:
+    pgAudit: true
+    pgStatMonitor: true
+  image: percona/percona-postgresql-operator:2.3.1-ppg16-postgres
+  imagePullPolicy: Always
+  instances:
+  - affinity:
+      podAntiAffinity:
+        preferredDuringSchedulingIgnoredDuringExecution:
+        - podAffinityTerm:
+            labelSelector:
+              matchLabels:
+                postgres-operator.crunchydata.com/data: postgres
+            topologyKey: kubernetes.io/hostname
+          weight: 1
+    dataVolumeClaimSpec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: openebs-hostpath
+    metadata:
+      labels:
+        pgv2.percona.com/version: 2.3.1
+    name: instance1
+    replicas: 2
+    tolerations:
+    - effect: NoSchedule
+      key: node-role/storage
+      operator: Equal
+      value: "true"
+    walVolumeClaimSpec:
+      accessModes:
+      - ReadWriteOnce
+      resources:
+        requests:
+          storage: 10Gi
+      storageClassName: openebs-hostpath
+  openshift: false
+  port: 5432
+  postgresVersion: 16
+  proxy:
+    pgBouncer:
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - podAffinityTerm:
+              labelSelector:
+                matchLabels:
+                  postgres-operator.crunchydata.com/role: pgbouncer
+              topologyKey: kubernetes.io/hostname
+            weight: 1
+      image: percona/percona-postgresql-operator:2.3.1-ppg16-pgbouncer
+      metadata:
+        labels:
+          pgv2.percona.com/version: 2.3.1
+      port: 5432
+      replicas: 2
+      service:
+        loadBalancerSourceRanges:
+        - 10.0.0.0/8
+        type: LoadBalancer

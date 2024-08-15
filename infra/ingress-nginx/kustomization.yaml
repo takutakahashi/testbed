@@ -3,6 +3,6 @@ resources:
   - install.yaml
   - servicemonitor.yaml
 patches:
-  - default-class.yaml
-  - service-patch.yaml
-  - deployment-patch.yaml
+  - path: default-class.yaml
+  - path: service-patch.yaml
+  - path: deployment-patch.yaml

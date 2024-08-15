@@ -1,0 +1,4 @@
+namespace: moco-system
+resources:
+  - namespace.yaml
+  - moco.yaml

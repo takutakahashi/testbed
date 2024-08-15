@@ -1,0 +1,9 @@
+resources:
+  - ./mysqlcluster.yaml
+  - ./proxysql.yaml
+  - ./proxysql.svc.yaml
+
+configMapGenerator:
+  - name: proxysql-config
+    files:
+      - proxysql.cnf=configmap/proxysql/proxysql.cnf

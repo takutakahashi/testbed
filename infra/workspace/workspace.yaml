@@ -19,6 +19,7 @@ spec:
       labels:
         app: workspace
     spec:
+      serviceAccountName: workspace
       containers:
         - command:
             - /home/owner/.dev/bin/entrypoint-sshd
@@ -34,10 +35,10 @@ spec:
           volumeMounts:
             - mountPath: /home/owner
               # name: home-tmp
-              name: home
-            - mountPath: /home/owner2
-              # name: home-tmp
               name: home-longhorn
+            - mountPath: /home/owner_bak
+              # name: home-tmp
+              name: home
             - mountPath: /opt/backup
               name: backup-credentials
             - mountPath: /etc/ssh

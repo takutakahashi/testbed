@@ -1,0 +1,9 @@
+namespace: keycloak-operator
+resources:
+  - https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/23.0.3/kubernetes/keycloaks.k8s.keycloak.org-v1.yml
+  - https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/23.0.3/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
+  - https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/23.0.3/kubernetes/kubernetes.yml
+  - postgres.yaml
+  - keycloak.yaml
+  - certificate.yaml
+  - realm.yaml

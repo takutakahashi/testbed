@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: system-upgrade-controller
+  namespace: system-upgrade
+spec:
+  template:
+    spec:
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/controlplane
+          operator: Exists
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/control-plane
+          operator: Exists
+        - effect: NoExecute
+          key: node-role.kubernetes.io/etcd
+          operator: Exists
+        - effect: NoExecute
+          key: k3s-controlplane
+          value: "true"
