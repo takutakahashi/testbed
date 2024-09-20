@@ -1,5 +1,5 @@
 namespace: openebs
 resources:
   - install.yaml
-  - https://raw.githubusercontent.com/openebs/charts/openebs-3.5.0/charts/openebs/crds/blockdevice.yaml
-  - https://raw.githubusercontent.com/openebs/charts/openebs-3.5.0/charts/openebs/crds/blockdeviceclaim.yaml
+  - https://raw.githubusercontent.com/openebs/charts/openebs-3.10.0/charts/openebs/crds/blockdevice.yaml
+  - https://raw.githubusercontent.com/openebs/charts/openebs-3.10.0/charts/openebs/crds/blockdeviceclaim.yaml

@@ -6,7 +6,7 @@ metadata:
   name: openebs
   labels:
     app: openebs
-    chart: openebs-3.5.0
+    chart: openebs-3.10.0
     release: openebs
     heritage: Helm
 ---
@@ -19,7 +19,7 @@ metadata:
   name: openebs-ndm-config
   labels:
     app: openebs
-    chart: openebs-3.5.0
+    chart: openebs-3.10.0
     release: openebs
     heritage: Helm
     component: ndm-config
@@ -98,7 +98,7 @@ metadata:
   name: openebs
   labels:
     app: openebs
-    chart: openebs-3.5.0
+    chart: openebs-3.10.0
     release: openebs
     heritage: Helm
 rules:
@@ -138,6 +138,9 @@ rules:
 - apiGroups: ["admissionregistration.k8s.io"]
   resources: ["validatingwebhookconfigurations", "mutatingwebhookconfigurations"]
   verbs: ["get", "create", "list", "delete", "update", "patch"]
+- apiGroups: ["coordination.k8s.io"]
+  resources: ["leases"]
+  verbs: ["get", "create", "update"]
 - nonResourceURLs: ["/metrics"]
   verbs: ["get"]
 ---
@@ -148,7 +151,7 @@ metadata:
   name: openebs
   labels:
     app: openebs
-    chart: openebs-3.5.0
+    chart: openebs-3.10.0
     release: openebs
     heritage: Helm
 roleRef:
@@ -167,12 +170,12 @@ metadata:
   name: openebs-ndm
   labels:
     app: openebs
-    chart: openebs-3.5.0
+    chart: openebs-3.10.0
     release: openebs
     heritage: Helm
     component: ndm
     openebs.io/component-name: ndm
-    openebs.io/version: 3.5.0
+    openebs.io/version: 3.10.0
 spec:
   updateStrategy:
     type: "RollingUpdate"
@@ -189,7 +192,7 @@ spec:
         component: ndm
         openebs.io/component-name: ndm
         name: openebs-ndm
-        openebs.io/version: 3.5.0
+        openebs.io/version: 3.10.0
     spec:
       serviceAccountName: openebs
       hostNetwork: true
@@ -296,12 +299,12 @@ metadata:
   name: openebs-localpv-provisioner
   labels:
     app: openebs
-    chart: openebs-3.5.0
+    chart: openebs-3.10.0
     release: openebs
     heritage: Helm
     component: localpv-provisioner
     openebs.io/component-name: openebs-localpv-provisioner
-    openebs.io/version: 3.5.0
+    openebs.io/version: 3.10.0
 spec:
   replicas: 1
   strategy:
@@ -319,12 +322,12 @@ spec:
         component: localpv-provisioner
         name: openebs-localpv-provisioner
         openebs.io/component-name: openebs-localpv-provisioner
-        openebs.io/version: 3.5.0
+        openebs.io/version: 3.10.0
     spec:
       serviceAccountName: openebs
       containers:
       - name: openebs-localpv-provisioner
-        image: "openebs/provisioner-localpv:3.4.0"
+        image: "openebs/provisioner-localpv:3.5.0"
         imagePullPolicy: IfNotPresent
         args:
           - "--bd-time-out=$(BDC_BD_BIND_RETRIES)"
@@ -366,7 +369,7 @@ spec:
         - name: OPENEBS_IO_BASE_PATH
           value: "/var/openebs/local"
         - name: OPENEBS_IO_HELPER_IMAGE
-          value: "openebs/linux-utils:3.4.0"
+          value: "openebs/linux-utils:3.5.0"
         - name: OPENEBS_IO_INSTALLER_TYPE
           value: "charts-helm"
         # LEADER_ELECTION_ENABLED is used to enable/disable leader election. By default
@@ -395,12 +398,12 @@ metadata:
   name: openebs-ndm-operator
   labels:
     app: openebs
-    chart: openebs-3.5.0
+    chart: openebs-3.10.0
     release: openebs
     heritage: Helm
     component: ndm-operator
     openebs.io/component-name: ndm-operator
-    openebs.io/version: 3.5.0
+    openebs.io/version: 3.10.0
     name: ndm-operator
 spec:
   replicas: 1
@@ -419,7 +422,7 @@ spec:
         component: ndm-operator
         name: ndm-operator
         openebs.io/component-name: ndm-operator
-        openebs.io/version: 3.5.0
+        openebs.io/version: 3.10.0
     spec:
       serviceAccountName: openebs
       containers:
@@ -454,5 +457,5 @@ spec:
         - name: OPERATOR_NAME
           value: "node-disk-operator"
         - name: CLEANUP_JOB_IMAGE
-          value: "openebs/linux-utils:3.4.0"
+          value: "openebs/linux-utils:3.5.0"
 
