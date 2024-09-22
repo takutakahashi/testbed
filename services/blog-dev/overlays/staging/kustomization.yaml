@@ -2,5 +2,8 @@ namespace: staging
 resources:
   - ../../base
 patches:
-  - ingress.patch.yaml
-  - cronjob.patch.yaml
+  - path: ingress.patch.yaml
+  - path: cronjob.patch.yaml
+images:
+  - name: ghcr.io/takutakahashi/blog.tpl
+    newTag: v1.5.0
