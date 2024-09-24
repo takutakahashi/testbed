@@ -38,7 +38,7 @@ spec:
             - mountPath: /content
               name: content
           containers:
-          - image: ghcr.io/takutakahashi/blog.tpl:v1.3.0
+          - image: ghcr.io/takutakahashi/blog.tpl:v1.10.0
             imagePullPolicy: Always
             env:
             - name: HUGO_ENV
