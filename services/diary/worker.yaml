@@ -33,7 +33,7 @@ spec:
               value: "https://github.com/takutakahashi/hugo-theme-anubis.git"
             - name: ONCE
               value: "--once"
-            image: ghcr.io/takutakahashi/blog.tpl:v1.3.0
+            image: ghcr.io/takutakahashi/blog.tpl:v1.10.0
             imagePullPolicy: Always
             name: worker
             volumeMounts:
