@@ -34,7 +34,7 @@ spec:
           requests:
             storage: 10Gi
   cephVersion:
-    image: quay.io/ceph/ceph:v16.2.10-20220721
+    image: quay.io/ceph/ceph:v18.2.4
     allowUnsupported: false
   skipUpgradeChecks: false
   continueUpgradeAfterChecksEvenIfNotHealthy: false
@@ -51,43 +51,8 @@ spec:
     enabled: true
   storage:
     storageClassDeviceSets:
-      - name: set-raw
-        count: 4
-        portable: false
-        tuneDeviceClass: true
-        placement:
-          nodeAffinity:
-            requiredDuringSchedulingIgnoredDuringExecution:
-              nodeSelectorTerms:
-                - matchExpressions:
-                    - key: openebs.io/devname
-                      operator: In
-                      values:
-                        - ceph-backend
-          topologySpreadConstraints:
-            - maxSkew: 2
-              topologyKey: kubernetes.io/hostname
-              whenUnsatisfiable: DoNotSchedule
-              labelSelector:
-                matchExpressions:
-                  - key: app
-                    operator: In
-                    values:
-                      - rook-ceph-osd
-                      - rook-ceph-osd-prepare
-        volumeClaimTemplates:
-          - metadata:
-              name: data
-            spec:
-              resources:
-                requests:
-                  storage: 400Gi
-              storageClassName: ceph-backend-device
-              volumeMode: Block
-              accessModes:
-                - ReadWriteOnce
       - name: topolvm
-        count: 1
+        count: 4
         portable: false
         tuneDeviceClass: true
         placement:
