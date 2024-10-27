@@ -3,12 +3,12 @@ kind: CronJob
 metadata:
   name: autobuy
 spec:
-  schedule: "0 0 * * *"
+  schedule: "0 0 * * 1"
   jobTemplate:
     spec:
       template:
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           containers:
             #- name: buy
             #  image: takutakahashi/autobuy
@@ -34,5 +34,5 @@ spec:
             - --ticker
             - BTC_JPY
             - --jpy
-            - "2000"
+            - "15000"
 
