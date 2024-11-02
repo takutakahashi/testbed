@@ -62,7 +62,7 @@ spec:
         emptyDir: {}
       - name: public
         persistentVolumeClaim:
-          claimName: diary-assets
+          claimName: diary-assets-2
       - name: config
         configMap:
           name: diary-nginx

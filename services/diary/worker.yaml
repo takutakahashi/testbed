@@ -46,9 +46,9 @@ spec:
           volumes:
           - name: public
             persistentVolumeClaim:
-              claimName: diary-assets
+              claimName: diary-assets-2
           - name: images
             persistentVolumeClaim:
-              claimName: image-assets
+              claimName: image-assets-3
           - emptyDir: {}
             name: content
