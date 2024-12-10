@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: diary-assets
+  name: diary-assets-2
   namespace: blog
 spec:
   accessModes:
@@ -9,4 +9,4 @@ spec:
   resources:
     requests:
       storage: 5Gi
-  storageClassName: ephemeral-rwx
+  storageClassName: nfs-csi

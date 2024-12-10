@@ -29,7 +29,7 @@ spec:
         command:
           - bash
           - -c
-          - "cp -r /src/* /dst/"
+          - "mkdir -p /src/dummy; cp -r /src/* /dst/"
         name: init-worker
         volumeMounts:
         - mountPath: /src
@@ -62,7 +62,7 @@ spec:
         emptyDir: {}
       - name: public
         persistentVolumeClaim:
-          claimName: diary-assets
+          claimName: diary-assets-2
       - name: config
         configMap:
           name: diary-nginx
