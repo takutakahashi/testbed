@@ -29,8 +29,8 @@ spec:
   - metadata:
       name: mysql-data
     spec:
-      storageClassName: topolvm-provisioner
+      storageClassName: local-path
       accessModes: [ "ReadWriteOnce" ]
       resources:
         requests:
-          storage: 20Gi
+          storage: 30Gi
